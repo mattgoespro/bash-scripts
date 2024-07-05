@@ -1,0 +1,9 @@
+{
+    "[shellscript]": {
+        "files.eol": "\n",
+        "editor.defaultFormatter": "shakram02.bash-beautify"
+    },
+    "shellcheck.enable": true,
+    "gitProjectManager.baseProjectsFolders": ["C:\\Users\\Matt\\Desktop\\Code"], 
+    "gitProjectManager.openInNewWindow": true
+}
