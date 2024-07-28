@@ -7,10 +7,10 @@ while IFS= read -r -d '' repo_git_dir; do
 	repo_dir="$(dirname "$repo_git_dir")"
 	repo_name="$(basename "$repo_dir")"
 	echo "Committing git repository '$repo_name'"
-	
-	cd "$repo_dir" || { 
+
+	cd "$repo_dir" || {
 		echo "error: unable to navigate to repository '${repo_dir}'"
-		exit 1 >>/dev/null 
+		exit 1 >>/dev/null
 	}
 
 	if ! git add .; then

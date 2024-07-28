@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function vdl () {
+function vdl() {
     if [ -z "$1" ]; then
         echo "Usage: vdl <url>"
         return 1

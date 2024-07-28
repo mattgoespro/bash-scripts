@@ -6,10 +6,11 @@
         "jeff-hykin.better-shellscript-syntax",
         "github.copilot",
         "github.copilot-chat",
-        "equinusocio.vsc-material-theme",
         "timonwong.shellcheck",
         "richie5um2.vscode-sort-json",
         "esbenp.prettier-vscode",
-        "felipecaputo.git-project-manager"
+        "felipecaputo.git-project-manager",
+        "mads-hartmann.bash-ide-vscode",
+        "foxundermoon.shell-format"
     ]
 }
