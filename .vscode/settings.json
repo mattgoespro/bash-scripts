@@ -1,0 +1,19 @@
+{
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "prettier.endOfLine": "lf",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "files.eol": "\n"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.shellcheck": "always"
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
+  "gitProjectManager.openInNewWindow": true,
+  "workbench.colorTheme": "Material Syntax - Dark",
+  "prettier.endOfLine": "lf"
+}
