@@ -8,15 +8,22 @@ function vdl() {
 
     # parse the --audio,-a flag from anywhere in the arguments
     local audio_flag=""
-    for arg in "$@"; do
-        if [ "$arg" == "--audio" ] || [ "$arg" == "-a" ]; then
-        echo "Adding audio flag..."
-            audio_flag="-x --audio-format mp3 --audio-quality 0"
-            # remove the flag from the arguments
-            set -- "${@/$arg/}"
-            break
-        fi
+
+    OPTIND=1
+
+    while getopts ":a:" opt; do
+        case $opt in
+        a)
+            audio_flag="--extract-audio --audio-format mp3"
+            ;;
+        \?)
+            echo "error: invalid option: -$OPTARG"
+            return 1
+            ;;
+        esac
     done
+
+    shift $((OPTIND - 1))
 
     local url="$1"
     local output_filename="$2"
@@ -27,10 +34,10 @@ function vdl() {
 
     local path="$HOME/Downloads/$output_filename"
 
-    eval "yt-dlp $audio_flag $url -o \"$path\""
+    eval "yt-dlp $audio_flag $url -o $path"
 }
 
-function edit() {
+function open() {
     if ! command -v subl &>/dev/null; then
         echo "error: sublime text executable not found."
         return 1
@@ -39,13 +46,16 @@ function edit() {
     local file="$1"
 
     if [ -z "$file" ]; then
-        echo "Usage: edit <file>"
+        echo "Usage: open <file>"
         return 1
     fi
 
     if [ ! -f "$file" ]; then
-        echo "error: file not found: $file"
-        return 1
+        read -rp "File '$file' not found, open a new file at this directory? [y/n] (default: n) " response
+
+        if [ "$response" != "y" ]; then
+            return 1
+        fi
     fi
 
     subl "$file"
