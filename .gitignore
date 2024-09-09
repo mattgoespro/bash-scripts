@@ -1,2 +1,7 @@
 .bash_aliases
 desktop.ini
+**/*.zip
+**/*.zip
+**/*.exe
+**/*.msi
+**/*.iso

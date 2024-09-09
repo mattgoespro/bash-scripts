@@ -11,6 +11,15 @@
     "foxundermoon.shell-format",
     "github.copilot",
     "github.copilot-chat",
-    "woodywoodsta.vscode-material-syntax-dark"
+    "woodywoodsta.vscode-material-syntax-dark",
+    "eliverlara.andromeda",
+    "oderwat.indent-rainbow",
+    "tylerleonhardt.vscode-inline-values-powershell",
+    "tobysmith568.run-in-powershell",
+    "ionutvmi.reg",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "truman.autocomplate-shell",
+    "ms-vscode.powershell"
   ]
 }

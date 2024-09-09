@@ -1,4 +1,16 @@
 {
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "files.eol": "\n"
+  },
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "files.eol": "\r\n"
+  },
   "[shellcheckrc]": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
@@ -9,17 +21,31 @@
     "editor.formatOnSave": true
   },
   "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
     "source.fixAll.shellcheck": "always"
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
+  "gitProjectManager.baseProjectsFolders": [
+    "%USERPROFILE%\\Desktop\\Code"
+  ],
   "gitProjectManager.openInNewWindow": true,
-  "shellcheck.customArgs": ["--rcfile", ".shellcheckrc"],
+  "markdown.preview.fontFamily": "'Open Sans', 'Ubuntu', 'Droid Sans', sans-serif",
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": true,
+  "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+  "powershell.codeFormatting.preset": "OTBS",
+  "powershell.codeFormatting.useConstantStrings": true,
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "powershell.integratedConsole.showOnStartup": false,
+  "powershell.pester.outputVerbosity": "Normal",
+  "shellcheck.customArgs": [
+    "--rcfile",
+    ".shellcheckrc"
+  ],
   "shellcheck.enable": true,
   "shellcheck.logLevel": "info",
   "shellcheck.run": "onType",
-  "shellcheck.useWorkspaceRootAsCwd": true,
-  "workbench.colorTheme": "Material Syntax - Dark"
+  "shellcheck.useWorkspaceRootAsCwd": true
 }
