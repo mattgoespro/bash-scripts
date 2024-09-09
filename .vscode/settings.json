@@ -1,0 +1,36 @@
+{
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "files.eol": "\n"
+    },
+    "[powershell]": {
+        "editor.defaultFormatter": "ms-vscode.powershell",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "files.eol": "\r\n"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.organizeImports": "always"
+    },
+    "gitProjectManager.baseProjectsFolders": [
+        "%USERPROFILE%\\Desktop\\Code"
+    ],
+    "gitProjectManager.openInNewWindow": true,
+    "markdown.preview.fontFamily": "'Open Sans', 'Ubuntu', 'Droid Sans', sans-serif",
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": true,
+    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+    "powershell.codeFormatting.preset": "OTBS",
+    "powershell.codeFormatting.useConstantStrings": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.integratedConsole.showOnStartup": false,
+    "powershell.pester.outputVerbosity": "Normal"
+}

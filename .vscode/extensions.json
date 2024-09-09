@@ -1,0 +1,22 @@
+{
+    "recommendations": [
+        "eliverlara.andromeda",
+        "jeff-hykin.better-shellscript-syntax",
+        "usernamehw.errorlens",
+        "oderwat.indent-rainbow",
+        "tylerleonhardt.vscode-inline-values-powershell",
+        "tobysmith568.run-in-powershell",
+        "richie5um2.vscode-sort-json",
+        "esbenp.prettier-vscode",
+        "felipecaputo.git-project-manager",
+        "ionutvmi.reg",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "github.copilot",
+        "github.copilot-chat",
+        "foxundermoon.shell-format",
+        "timonwong.shellcheck",
+        "truman.autocomplate-shell",
+        "ms-vscode.powershell",
+    ]
+}
