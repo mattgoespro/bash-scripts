@@ -43,20 +43,41 @@ function open() {
         return 1
     fi
 
-    local file="$1"
+    local path="$1"
 
-    if [ -z "$file" ]; then
-        echo "Usage: open <file>"
+    if [ -z "$path" ]; then
+        echo "Usage: open <path>"
         return 1
     fi
 
-    if [ ! -f "$file" ]; then
-        read -rp "File '$file' not found, open a new file at this directory? [y/n] (default: n) " response
+    if [ ! -f "$path" ]; then
+        read -rp "Path '$path' not found, open a new file at this directory? [y/n] (default: n) " response
 
         if [ "$response" != "y" ]; then
             return 1
         fi
     fi
 
-    subl "$file"
+    subl "$path"
+}
+
+function goto-desktop() {
+    cd "$HOME/Desktop" || echo "error: could not change directory to $HOME/Desktop"
+}
+
+function goto-code() {
+    cd "$HOME/Desktop/Code" || echo "error: could not change directory to $HOME/Desktop/Code"
+}
+
+function goto-js-scripts() {
+    cd "$HOME/Desktop/Code/Node/repositories/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
+}
+
+function edit-env() {
+    open "$HOME/.bashrc"
+}
+
+function reload() {
+    # shellcheck disable=SC1091
+    source "$HOME/.bashrc"
 }
