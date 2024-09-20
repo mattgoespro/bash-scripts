@@ -17,11 +17,15 @@ if [ -f "$bashrc_file" ]; then
 fi
 
 log "initializing, creating bashrc file for the first time..."
+
 touch "$bashrc_file"
 
 # source this bashrc file
 {
+    echo "#!/bin/bash" >>"$bashrc_file"
+
     repo_bashrc_file="$source_dirname/.bashrc"
+
     echo "# shellcheck source=/dev/null"
     echo "source \"$repo_bashrc_file\""
 } >>"$bashrc_file"
