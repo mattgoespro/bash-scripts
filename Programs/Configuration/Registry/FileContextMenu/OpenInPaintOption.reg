@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.png\Shell\OpenInPaint]
+@="Open in Paint"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.png\Shell\OpenInPaint\command]
+@="\"C:\\Windows\\system32\\mspaint.exe\" \"%1\""

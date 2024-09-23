@@ -1,7 +1,5 @@
-Include: example.txt
-LoudnessCorrection: State 1 ReferenceLevel -6 ReferenceOffset 36 Attenuation 0.01
+LoudnessCorrection: State 1 ReferenceLevel 0 ReferenceOffset 36 Attenuation 0.01
 Preamp: 20 dB
 Channel: ALL
 Device: all
-Preamp: 15.5 dB
-Convolution: 
+Preamp: 19.6 dB

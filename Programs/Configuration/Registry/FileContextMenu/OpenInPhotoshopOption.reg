@@ -1,0 +1,31 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.png\Shell\OpenInPhotoshop]
+@="Open in Photoshop"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.png\Shell\OpenInPhotoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\photoshop.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.jpg\Shell\OpenInPhotoshop]
+@="Open in Photoshop"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.jpg\Shell\OpenInPhotoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\photoshop.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.jpeg\Shell\OpenInPhotoshop]
+@="Open in Photoshop"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.jpeg\Shell\OpenInPhotoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\photoshop.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.bmp\Shell\OpenInPhotoshop]
+@="Open in Photoshop"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.bmp\Shell\OpenInPhotoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\photoshop.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.gif\Shell\OpenInPhotoshop]
+@="Open in Photoshop"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.gif\Shell\OpenInPhotoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\photoshop.exe\" \"%1\""
