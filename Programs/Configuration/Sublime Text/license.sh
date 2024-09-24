@@ -1,46 +1,61 @@
 #!/bin/bash
 
-repository="https://github.com/rainbowpigeon/sublime-text-4-patcher"
-repository_dir="./sublime-text-4-patcher"
+subl_text_patcher_dir="$TEMP\\sublime-text-4-patcher"
 
-echo "Cloning repository..."
+if [ -d "$subl_text_patcher_dir" ]; then
+    rm -rf "$subl_text_patcher_dir" || {
+        echo "ERROR: failed to remove existing patcher directory: $subl_text_patcher_dir"
+        exit 1
+    }
+fi
 
-git clone $repository $repository_dir || {
-    echo "error: failed to clone 'sublime-text-4-patcher' repository: $repository"
+subl_text_patcher_repo="https://github.com/rainbowpigeon/sublime-text-4-patcher"
+
+echo "Cloning repository source '$subl_text_patcher_repo'..."
+
+git clone "$subl_text_patcher_repo" "$subl_text_patcher_dir" || {
+    echo "ERROR: failed to clone 'sublime-text-4-patcher' repository: $subl_text_patcher_repo"
     exit 1
 }
 
-cd repository_dir || {
-    echo "error: failed to enter patching directory: $repository_dir"
-    exit 1
-}
+# cd "$subl_text_patcher_dir" || {
+#     echo "ERROR: failed to enter patching directory: $subl_text_patcher_dir"
+#     exit 1
+# }
 
-echo "Creating virtual environment..."
+echo "Creating sublime-text-4-patcher Python virtual environment..."
+python_environment_dir="$subl_text_patcher_dir\\.venv"
 
-# shellcheck disable=SC1091
-if ! python -m venv .venv; then
-    echo "error: failed to create virtual environment"
+if ! python -m venv "$python_environment_dir"; then
+    echo "ERROR: failed to create Python virtual environment in '$subl_text_patcher_dir'"
     exit 1
 fi
 
-# shellcheck disable=SC1091
-source ./.venv/Scripts/activate
+# shellcheck source=/dev/null
+source "$python_environment_dir\\Scripts\\activate"
 
-echo "Installing python dependencies..."
+echo "Installing sublime-text-4-patcher dependencies..."
 
-if ! pip install -r requirements.txt; then
-    echo "error: failed to install python dependencies"
+if ! pip install -r "$subl_text_patcher_dir\\requirements.txt"; then
+    echo "ERROR: failed to install Python dependencies"
     exit 1
 fi
 
-echo "Patching Sublime Text 4..."
+echo "Patching Sublime Text executable..."
 
-python sublime_text_4_patcher.py "C:\\Program Files\\Sublime Text\\sublime_text.exe" || {
-    echo "error: failed to patch Sublime Text 4"
+sublime_text_exe="$PROGRAMFILES\\Sublime Text\\sublime_text.exe"
+
+if [ ! -f "$sublime_text_exe" ]; then
+    echo "ERROR: Sublime Text executable not found: $sublime_text_exe"
+    exit 1
+fi
+
+python "$subl_text_patcher_dir\\sublime_text_patcher.py" "$sublime_text_exe" || {
+    echo "ERROR: failed to patch Sublime Text 4"
     exit 1
 }
 
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 . "$HOME/.bashrc"
 
 if read -r -p "Hit [Enter] to open Sublime Text and enter the license code..."; then
@@ -59,12 +74,12 @@ E36B85CC 84991F19 7575D828 470A92AB
 ------ END LICENSE ------"
 
     echo "$sample_license" | clip.exe
-    echo "Copied license key to clipboard"
+    echo "copied license key to clipboard"
 
     if ! subl; then
-        echo "error: failed to open Sublime Text 4"
+        echo "ERROR: failed to open Sublime Text"
         exit 1
     fi
 
-    echo "Opening Sublime Text 4..."
+    echo "Opening Sublime Text..."
 fi
