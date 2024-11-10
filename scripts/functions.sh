@@ -43,3 +43,7 @@ function update-else-append-file() {
 
     return 0
 }
+
+function chrome-debug() {
+    "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222
+}

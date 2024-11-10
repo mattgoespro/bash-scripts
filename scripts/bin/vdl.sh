@@ -1,21 +1,30 @@
 #!/bin/bash
 
-if [ -z "$BASH_SCRIPTS" ]; then
-    echo "error: BASH_SCRIPTS environment variable not set"
-    exit 1
-fi
+function log() {
+    echo "[vdl] $1"
+}
 
-yt_dlp_executable="$BASH_SCRIPTS\\bin\\yt-dlp.exe"
+function show_usage() {
+    echo "usage: vdl \"<url>\" [-a|--audio] [output_filename]"
+}
+
+yt_dlp_executable="C:\\ProgramData\\chocoportable\\bin\\yt-dlp.exe"
 
 if [ ! -f "$yt_dlp_executable" ]; then
-    echo "error: yt-dlp executable not found"
+    log "error: yt-dlp executable not found: '$yt_dlp_executable'"
     exit 1
 fi
 
 if [ $# -eq 0 ] || [ -z "$1" ]; then
-    echo "Usage: vdl <url> [-a|--audio] [output_filename]"
+    show_usage
     exit 1
 fi
+
+# the URL must be quoted if it contains an ampersand
+# if [[ "$1" == *"&"* ]]; then
+#     log "error: url must be quoted."
+#     exit 1
+# fi
 
 audio_flag=""
 
@@ -27,7 +36,7 @@ while getopts ":a:" opt; do
         audio_flag="--extract-audio --audio-format mp3"
         ;;
     \?)
-        echo "error: invalid option: -$OPTARG"
+        show_usage
         exit 1
         ;;
     esac
@@ -36,12 +45,17 @@ done
 shift $((OPTIND - 1))
 
 url="$1"
-echo "Downloading video from: $url"
-output_filename="$2"
 
-if [ -z "$output_filename" ]; then
+output_filename=""
+
+if [ -z "$2" ]; then
     output_filename="%(title)s.%(ext)s"
+else
+    output_filename="$2_%(title)s.%(ext)s"
 fi
 
-path="$HOME\\Downloads\\$output_filename"
-eval "\"$yt_dlp_executable\" $audio_flag $url -o \"$path\""
+download_path="$HOME\\Downloads\\$output_filename"
+
+read -r -t 1 -p "downloading video $url ..." -n 1
+
+$yt_dlp_executable "$audio_flag" "$url" -o "$download_path"

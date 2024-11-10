@@ -60,7 +60,7 @@ $ANDROID_SDK_EMULATOR"
 export NODE_LOCAL="$VOLTA_LOCAL\\tools\\image\\node\\20.17.0"
 
 USER_PATH="$USER_PATH:\
-$NODE_LOCAL:"
+$NODE_LOCAL"
 
 # Application Configuration Paths
 export JAVA_HOME="$ANDROID_STUDIO\\jbr"
