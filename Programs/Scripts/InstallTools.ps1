@@ -49,6 +49,14 @@ function installWithPip ($package) {
     pip install $package
 }
 
+function installNodeBun () {
+    # check if deno is installed
+    if (-not (Get-Command bun -ErrorAction Stop)) {
+        Write-Host 'Installing Bun runtime for Node.JS ...'
+        powershell -c 'irm bun.sh/install.ps1 | iex'
+    }
+}
+
 
 # Chocolatey
 installWithChocolatey 'python'
@@ -56,9 +64,13 @@ installWithChocolatey 'python'
 # Winget
 installWithWinget 'ffmpeg'
 installWithWinget 'shfmt'
+installWithWinget 'shellcheck'
 
 # Volta
 installWithVolta 'node'
-installWithVolta 'shellcheck'
+
+# Python Pip
 installWithPip 'pylint'
 installWithPip 'black'
+
+installNodeBun

@@ -5,9 +5,6 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     exit 1
 }
 
-# Extract the archives found in `Archives` directory relative to this script, then
-# execute the `.inf` installation file to install the cursor pack.
-
 $scriptDir = $PSScriptRoot
 $cursor_pack_dir = Join-Path -Path $scriptDir -ChildPath 'Archives'
 
@@ -26,44 +23,45 @@ try {
         exit 1
     }
 
-    Write-Host "Found $($archives.Count) cursor packs to install."
+    Write-Host "Found $($archives.Count) cursor packs to install:"
+    $archives | ForEach-Object { Write-Host "  - $( $_.BaseName)" }
+
+    # Read-Host -Prompt `n'Press [Enter] to install the cursor packs...'
 
     $tempDir = New-Item -ItemType Directory -Path "$env:TEMP\InstallCursors" -Force
 
-    Write-Host "Created temporary directory $tempDir"
-
-    Pause
     foreach ($archive in $archives) {
-        Write-Host "Installing $($archive.Name)..."
-        # Add the rest of your installation logic here
+        Write-Host "Installing cursor pack '$($archive.Name)'..."
 
         # Extract the archive
-        Expand-Archive -Path $archive.FullName -DestinationPath $tempDir.FullName -Force
+        Expand-Archive -Path $archive.FullName -DestinationPath $tempDir.FullName -Force -ErrorAction Stop
 
         # Get the extracted directory
         $extractedDir = Get-ChildItem -Path $tempDir.FullName -Directory | Select-Object -First 1
 
-        # Get the `.inf` file
-        $infFile = Join-Path -Path $extractedDir.FullName -ChildPath '*.inf' | Get-Item
+        # Execute `install.inf`
+        $infFile = Join-Path -Path $extractedDir.FullName -ChildPath 'install.inf'
 
+        Write-Host "Found installation file: $($infFile.Name)"
         if (-not $infFile) {
             Write-Host "Installation file not found: $infFile"
             Write-Host "Create an installation file with the extension `.inf` then rerun this script."
             continue
         }
 
-        # Install the cursor pack
-        Write-Host "Installing $($infFile.Name)..."
-        Start-Process -FilePath 'cmd.exe' -ArgumentList "/c ${infFile.FullName}" -Wait -NoNewWindow
+        # Use Start-Process to run the .inf file with the correct command
+        # TODO: Fix
+        Write-Host "Running installation file: $($infFile)"
+        # RUNDLL32.EXE SETUPAPI.DLL, InstallHinfSection DefaultInstall 132 `"$infFile`"
 
         Write-Host "Successfully installed $($archive.Name)"
     }
 
-    Write-Host 'Cleaning up...'
     Remove-Item -Path $tempDir.FullName -Recurse -Force
 
-    Write-Host 'Installation complete.'
-    Read-Host -Prompt 'Press [Enter] to exit...'
+    Write-Host `nInstallation complete.
+
+    Read-Host -Prompt `n'Press [Enter] to exit...'
     exit 0
 } catch {
     Write-Host "An error occurred: $_"
