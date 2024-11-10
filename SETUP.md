@@ -1,21 +1,17 @@
 # Windows 10 Desktop Setup
 
-## _npm_
+## Visual Studio Code
 
-### Configuring _npm_ for Visual Studio Code
+## Setting NPM script integrated terminal
 
-- Using the _npm scripts_ side panel view to execute scripts in an external shell: `npm config set script-shell <external_shell_executable_path>`
+In orderto execute the scripts defined in the _npm scripts_ side panel view, set the default _npm_ terminal: `npm config set script-shell <terminal_executable_path>`
 
-Examples:
+Example shell Executables:
 
-- **Bash for Windows**
-  - `npm config set script-shell "$ProgramFiles\Git\bin\bash.exe"`
-- **Windows Subsystem for Linux**
-  - `npm config set script-shell "$WINDIR\System32\bash.exe`
+- **Bash for Windows**:_C:\Program Files\git\bin\bash.exe_
+- **Windows Subsystem for Linux**: _C:\Windows\System32\bash.exe_
 
-## _Visual Studio Code_
-
-### Configuring the _bash_ terminal profile for a project
+### Configuring _bash_ as the default project terminal profile
 
 Sometimes, terminal-specific environment values aren't being set as expected within the default profile settings, due to environment conflicts when Visual Studio Code opens the terminal.
 
@@ -47,18 +43,19 @@ If a custom _**bashrc**_ file `$HOME\\.bashrc` exists:
 
 - Ensure that the **PATH** is being exported: `export PATH="$PATH"`
 
-### Clearing Visual Studio Code Cache
+### Fixing Visual Studio Code editor corruption
 
-Clear the cache cache case of editor corruption or other issues:
-To clear the Visual Studio Code , delete the following folders from the _AppData_ directory:
+If the editor has been corrupted or has other issues that can't be solved otherwise, clearing the cache may help.
 
-- Navigate to **_%APPDATA%\\Roaming\\Code_**
-- Delete the following folders:
-  - _Cache_
-  - _CachedData_
-  - _CachedExtensions_
-  - _CachedExtensionVSIXs_
-  - _Code Cache_
+To clear the cache, run the following command to delete the cache folders:
+
+```bash
+rm -rf "$APPDATA\\Code\\Cache" && \
+rm -rf "$APPDATA\\Code\\CachedData" && \
+rm -rf "$APPDATA\\Code\\CachedExtensions" && \
+rm -rf "$APPDATA\\Code\\CachedExtensionsVSIXs" && \
+rm -rf "$APPDATA\\Code\\Code Cache"
+```
 
 ## Enabling Windows Subsystem for Linux (WSL)
 
