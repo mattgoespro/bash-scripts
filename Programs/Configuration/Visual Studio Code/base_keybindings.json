@@ -1,0 +1,48 @@
+[
+    {
+        "command": "revealFileInOS",
+        "key": "ctrl+shift+z"
+    },
+    {
+        "command": "editor.action.blockComment",
+        "key": "ctrl+shift+/",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "command": "editor.action.copyLinesDownAction",
+        "key": "ctrl+shift+down",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "command": "-editor.action.copyLinesDownAction",
+        "key": "shift+alt+down",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "command": "sortJSON.sortJSON",
+        "key": "ctrl+shift+s",
+        "when": "editorTextFocus && !editorReadonly && editorLangId == 'json'"
+    },
+    {
+        "key": "ctrl+alt+right",
+        "command": "editor.action.inlineSuggest.showNext",
+        "when": "inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+left",
+        "command": "-workbench.action.moveEditorToPreviousGroup"
+    },
+    {
+        "key": "ctrl+alt+left",
+        "command": "editor.action.inlineSuggest.showPrevious",
+        "when": "inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+,",
+        "command": "workbench.action.openGlobalKeybindings"
+    },
+    {
+        "key": "ctrl+shift+,",
+        "command": "workbench.action.openSettingsJson"
+    }
+]

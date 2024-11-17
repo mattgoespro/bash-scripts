@@ -17,6 +17,9 @@
         "foxundermoon.shell-format",
         "timonwong.shellcheck",
         "truman.autocomplate-shell",
+        "mads-hartmann.bash-ide-vscode",
+        "shakram02.bash-beautify",
+        "rogalmic.bash-debug",
         "ms-vscode.powershell",
     ]
 }
