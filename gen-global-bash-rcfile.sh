@@ -4,10 +4,10 @@ function log() {
     echo "gen-global-bash-rcfile: $*"
 }
 
-source_dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
-source "$source_dirname/scripts/bin/update-else-append-file.sh"
+source "$cwd/scripts/bin/update-else-append-file.sh"
 
 function create-global-bashrc-file() {
     local global="$1"
@@ -60,7 +60,7 @@ function source-utility-functions() {
 
     log "sourcing functions..."
 
-    local repo_functions="$source_dirname/scripts/functions.sh"
+    local repo_functions="$cwd/scripts/functions.sh"
 
     if ! grep -q "$repo_functions" "$global"; then
         echo "source \"$repo_functions\"" >>"$global"
@@ -71,9 +71,9 @@ function source-utility-functions() {
 }
 
 global_bashrc_file="$HOME/.bashrc"
-repo_bashrc_file="$source_dirname/.bashrc"
+repo_bashrc_file="$cwd/.bashrc"
 
-repo_bash_aliases_file="$source_dirname/.bash_aliases"
+repo_bash_aliases_file="$cwd/.bash_aliases"
 
 create-global-bashrc-file "$global_bashrc_file" "$repo_bashrc_file"
 source-repo-bash-aliases "$global_bashrc_file" "$repo_bash_aliases_file"

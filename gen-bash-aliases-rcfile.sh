@@ -1,11 +1,16 @@
 #!/bin/bash
 
-function log() {
-    echo "gen-bash-aliases-rcfile: $*"
-}
+cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-source_dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-log "source_dirname: $source_dirname"
+function log() {
+    local prefix="gen-bash-aliases-rcfile: "
+    local message="$1"
+
+    # Split the message by newline and append the prefix to each line
+    while IFS= read -r line; do
+        echo "${prefix}${line}"
+    done <<<"$(echo -e "$message")"
+}
 
 function extract_first_chars() {
     local input="$1"
@@ -30,51 +35,75 @@ function extract_first_chars() {
     echo "$result"
 }
 
+function generated-alias-exists() {
+    local generated_aliases_rcfile="$1"
+    local alias_definition="$2"
+
+    if grep -q "$alias_definition" "$generated_aliases_rcfile"; then
+        return 0
+    fi
+
+    return 1
+}
+
+function script-has-shorthand-alias() {
+    local script_alias="$1"
+
+    if grep -q "= $script_alias" "$cwd/scripts/.shorthand-bin-aliases"; then
+        return 0
+    fi
+
+    return 1
+}
+
 function add-script-shorthand-alias() {
-    local repo_aliases="$1"
-    local filename="$2"
+    local generated_aliases_rcfile="$1"
+    local script_file_name="$2"
 
-    short_filename="$(extract_first_chars "$filename")"
-    alias_cmd="alias $short_filename=\"$file_path\""
+    local script_short_file_name
+    script_short_file_name="$(extract_first_chars "$script_file_name")"
+    local alias_definition
+    alias_definition="alias $script_short_file_name=\"$script_file_name\""
 
-    if ! grep -q "$short_filename" "$repo_aliases"; then
-        echo "$alias_cmd" >>"$repo_aliases"
-        log "added '$filename' short alias: '$short_filename' -> '$file_path'"
+    if ! generated-alias-exists "$generated_aliases_rcfile" "$script_short_file_name"; then
+        echo "$alias_definition" >>"$generated_aliases_rcfile"
+        log "added '$filename' short alias: '$script_short_file_name' -> '$script_file_name'"
     else
-        log "already exists: '$short_filename'"
+        log "alias already exists: '$script_short_file_name'"
     fi
 }
 
 function add-script-aliases() {
-    local repo_aliases="$1"
+    local generated_aliases_rcfile="$1"
 
     log "generating script aliases..."
 
-    while IFS= read -r -d '' file_path; do
-        filename="$(basename "$file_path" .sh)"
-        alias_cmd="alias $filename=\"$file_path\""
+    while IFS= read -r -d '' script_file_path; do
+        local filename
+        filename="$(basename "$script_file_path" .sh)"
+        local alias_definition="alias $filename=\"$script_file_path\""
 
-        if ! grep -q "$filename" "$repo_aliases"; then
-            echo "alias $filename=\"$file_path\"" >>"$repo_aliases"
-            log "added alias: '$filename' -> '$file_path'"
+        if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
+            echo "$alias_definition" >>"$generated_aliases_rcfile"
+            log "added alias: '$filename' -> '$script_file_path'"
         else
-            log "already exists: '$filename'"
+            log "alias already exists: '$filename'"
         fi
 
-        if grep -q "$filename" "./scripts/.shorthand-bin-aliases"; then
-            add-script-shorthand-alias "$repo_aliases" "$filename"
+        if script-has-shorthand-alias "$filename"; then
+            add-script-shorthand-alias "$filename" "$generated_aliases_rcfile"
         fi
-    done < <(find "$source_dirname/scripts/bin" -maxdepth 1 -name "*.sh" -type f -print0)
+    done < <(find "$cwd/scripts/bin" -maxdepth 1 -name "*.sh" -type f -print0)
 }
 
-function add-manual-aliases() {
-    log "adding CLI aliases..."
+function add-user-defined-aliases() {
+    log "adding user-defined aliases..."
 
     local repo_aliases="$1"
-    local script_aliases_file
-    script_aliases_file="$source_dirname/scripts/.manual-aliases"
+    local manual_aliases_file
+    manual_aliases_file="$cwd/scripts/.user-aliases"
 
-    IFS=$'\n' read -d '' -r -a aliases <"$script_aliases_file"
+    IFS=$'\n' read -d '' -r -a aliases <"$manual_aliases_file"
 
     for alias_cmd in "${aliases[@]}"; do
         # get the alias name between the `alias ` and the `=`
@@ -82,17 +111,18 @@ function add-manual-aliases() {
 
         if ! grep -q "$alias_name" "$repo_aliases"; then
             echo "$alias_cmd" >>"$repo_aliases"
-            log "added custom alias: '$alias_cmd'"
+            log "added manual alias: '$alias_cmd'"
         else
-            log "already exists: '$alias_cmd'"
+            log "alias already exists: '$alias_cmd'"
         fi
     done
 }
 
 function generate-repo-bash-aliases-rcfile() {
-    local repo_bash_aliases_file="$source_dirname/.bash_aliases"
+    local repo_bash_aliases_file="$cwd/.bash_aliases"
 
     log "generating repo bash aliases rcfile..."
+    sleep 1
 
     if [ -f "$repo_bash_aliases_file" ]; then
         rm -f "$repo_bash_aliases_file"
@@ -100,10 +130,18 @@ function generate-repo-bash-aliases-rcfile() {
     fi
 
     echo "#!/bin/bash" >"$repo_bash_aliases_file"
-    log "created repo bash aliases rcfile"
+    log "created repo bash aliases rcfile: $repo_bash_aliases_file"
+    sleep 2
 
     add-script-aliases "$repo_bash_aliases_file"
-    add-manual-aliases "$repo_bash_aliases_file"
+    log "\nsuccessfully added script aliases!"
+    sleep 2
+
+    add-user-defined-aliases "$repo_bash_aliases_file"
+    log "\nsuccessfully added user aliases!"
 }
 
-generate-repo-bash-aliases-rcfile
+generate-repo-bash-aliases-rcfile || {
+    log "error: failed to generate repo bash aliases rcfile."
+    exit 1
+}
