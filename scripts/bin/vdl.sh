@@ -8,10 +8,16 @@ function show_usage() {
     echo "usage: vdl \"<url>\" [-a|--audio] [output_filename]"
 }
 
-yt_dlp_executable="C:\\ProgramData\\chocoportable\\bin\\yt-dlp.exe"
+# check if yt-dlp executable is on PATH
+yt_dlp_executable=$(command -v yt-dlp)
+
+# if yt-dlp executable is not on PATH, check common locations
+yt_dlp_search_paths=("$HOME/bin", "$HOME/Desktop/Code/Other/bash-scripts/bin","/c/ProgramData/chocolatey/bin","$LOCALAPPDATA/Microsoft/WinGet/Links")
+yt_dlp_executable=""
 
 if [ ! -f "$yt_dlp_executable" ]; then
-    log "error: yt-dlp executable not found: '$yt_dlp_executable'"
+    log "error: yt-dlp executable not found: $yt_dlp_executable"
+    log "download the executable from the yt-dlp GitHub releases page: https://github.com/yt-dlp/yt-dlp/releases"
     exit 1
 fi
 

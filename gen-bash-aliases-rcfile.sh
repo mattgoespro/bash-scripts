@@ -19,7 +19,7 @@ function extract_first_chars() {
     # Split the string by '-' and extract the first character of each part
     IFS='-' read -ra parts <<<"$input"
 
-    if [ "${#parts[@]}" -eq 1 ]; then
+    if [[ "${#parts[@]}" -eq 1 ]]; then
         echo "${parts[0]}"
         return
     fi
@@ -96,17 +96,37 @@ function add-script-aliases() {
     done < <(find "$cwd/scripts/bin" -maxdepth 1 -name "*.sh" -type f -print0)
 }
 
+function add-js-scripts-executable-aliases() {
+    local generated_aliases_rcfile="$1"
+
+    log "generating aliases for js-scripts executables..."
+
+    while IFS= read -r -d '' executable_file_path; do
+        local filename
+        filename="$(basename "$executable_file_path" .exe)"
+        local alias_definition="alias $filename=\"$executable_file_path\""
+
+        if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
+            echo "$alias_definition" >>"$generated_aliases_rcfile"
+            log "added js-scripts executable alias: '$filename' -> '$executable_file_path'"
+        else
+            log "js-scripts executable alias already exists: '$filename'"
+        fi
+    done < <(find "$(cygpath "$HOME")/Desktop/Code/Node/js-scripts/bin" -maxdepth 1 -name "*.exe" -type f -print0)
+}
+
 function add-user-defined-aliases() {
     log "adding user-defined aliases..."
 
     local repo_aliases="$1"
     local manual_aliases_file
-    manual_aliases_file="$cwd/scripts/.user-aliases"
+    local manual_aliases_file="$cwd/scripts/.user-aliases"
 
     IFS=$'\n' read -d '' -r -a aliases <"$manual_aliases_file"
 
     for alias_cmd in "${aliases[@]}"; do
         # get the alias name between the `alias ` and the `=`
+        local alias_name
         alias_name="$(echo "$alias_cmd" | cut -d' ' -f2 | cut -d'=' -f1)"
 
         if ! grep -q "$alias_name" "$repo_aliases"; then
@@ -124,7 +144,7 @@ function generate-repo-bash-aliases-rcfile() {
     log "generating repo bash aliases rcfile..."
     sleep 1
 
-    if [ -f "$repo_bash_aliases_file" ]; then
+    if [[ -f "$repo_bash_aliases_file" ]]; then
         rm -f "$repo_bash_aliases_file"
         log "removed existing repo bash aliases rcfile"
     fi
@@ -135,6 +155,10 @@ function generate-repo-bash-aliases-rcfile() {
 
     add-script-aliases "$repo_bash_aliases_file"
     log "\nsuccessfully added script aliases!"
+    sleep 2
+
+    add-js-scripts-executable-aliases "$repo_bash_aliases_file"
+    log "\nsuccessfully added js-scripts executable aliases!"
     sleep 2
 
     add-user-defined-aliases "$repo_bash_aliases_file"

@@ -9,20 +9,22 @@ function goto-code() {
 }
 
 function goto-js-scripts() {
-    cd "$HOME/Desktop/Code/Node/repositories/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
+    cd "$HOME/Desktop/Code/Node/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
 }
 
 function edit-env() {
-    open "$HOME/.bashrc"
+    # shellcheck disable=SC2154
+    # open the .bashrc file at the project's root
+    code "$BASH_SCRIPTS/.bashrc"
 }
 
 function reload() {
     # shellcheck disable=SC1091
-    source "$HOME/.bashrc"
+    . "$HOME/.bashrc"
 }
 
 function update-else-append-file() {
-    if [ ! -f "$1" ]; then
+    if [[ ! -f "$1" ]]; then
         echo "[update-else-append-file] error: file '$1' not found."
         return 1
     fi
@@ -32,7 +34,7 @@ function update-else-append-file() {
     if ! grep -q "$2" "$1"; then
         echo "$2" >>"$1"
 
-        if [ -z "$append_message" ]; then
+        if [[ -z "$append_message" ]]; then
             echo "[update-else-append-file] appended '$2' to '$1'."
         else
             log "$append_message"
@@ -57,18 +59,18 @@ function find-file() {
 
     local file_name="$1"
 
-    if [ -z "$file_name" ]; then
+    if [[ -z "$file_name" ]]; then
         usage
         return 1
     fi
 
     local search_dir="$2"
 
-    if [ -z "$search_dir" ]; then
+    if [[ -z "$search_dir" ]]; then
         search_dir="."
     fi
 
-    if [ ! -d "$search_dir" ]; then
+    if [[ ! -d "$search_dir" ]]; then
         echo "[find-file: error] search directory does not exist: $search_dir"
         return 1
     fi
@@ -85,21 +87,25 @@ function find-dir() {
 
     local dir_name="$1"
 
-    if [ -z "$dir_name" ]; then
+    if [[ -z "$dir_name" ]]; then
         usage
         return 1
     fi
 
     local search_dir="$2"
 
-    if [ -z "$search_dir" ]; then
+    if [[ -z "$search_dir" ]]; then
         search_dir="."
     fi
 
-    if [ ! -d "$search_dir" ]; then
+    if [[ ! -d "$search_dir" ]]; then
         echo "[find-dir: error] search directory does not exist: $search_dir"
         return 1
     fi
 
     find "$search_dir" -type d -name "$dir_name"
 }
+
+# function vscode-open-bash-scripts() {
+#     code "$BASH_SCRIPTS"
+# }

@@ -1,0 +1,74 @@
+# .shellcheckrc
+
+# The shell to check (sh, bash, dash, ksh, zsh)
+# shell=bash
+
+# Enable specific warnings
+enable=all
+
+# Disable specific warnings
+disable=SC2250,SC2312
+
+# Set the severity level for warnings (error, warning, info, style)
+severity=style
+
+# Exclude files or directories
+exclude=
+
+# Include files or directories
+include=
+
+# Exclude specific directories from recursive checks
+exclude-dir=
+
+# Source paths for external files
+source-paths=
+
+# Color output (always, auto, never)
+color=always
+
+# Output Format (tty, gcc, json, checkstyle, diff, quiet)
+format=tty
+
+# Whether to check shebang lines
+check-sourced=true
+
+
+# Whether to follow sourced files
+follow-sources=true
+
+# Maximum number of issues to show
+max-issues=0
+
+# Whether to show source code snippets
+show-snippet=true
+
+# Whether to show rule descriptions
+show-description=true
+
+# Whether to show rule links
+show-link=true
+
+# Whether to show rule codes
+show-code=true
+
+# Whether to show rule severity
+show-severity=true
+
+# Enable or disable specific checks
+# For example, to disable SC2034 and enable SC2001:
+# disable=SC2034
+# enable=SC2001
+
+# ShellCheck version to use
+version=
+
+# Enable or disable specific rules
+# For example, to disable SC2034 and enable SC2001:
+# disable=SC2034
+# enable=SC2001
+
+# Enable or disable specific rules by category
+# For example, to disable all style warnings:
+# disable=style
+# enable=error,warning,info

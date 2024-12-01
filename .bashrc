@@ -12,8 +12,6 @@ PROGRAMFILES="/c/Program Files"
 
 LOCALAPPDATA="/c/Users/Matt/AppData/Local"
 
-export PATH=
-
 # System Programs
 ANDROID_STUDIO="$PROGRAMFILES/Android/Android Studio"
 CHOCOLATEY="$PROGRAMDATA/chocolatey"
@@ -69,12 +67,15 @@ USER_PATH="$USER_PATH:\
 $JAVA_HOME/bin:\
 $PYTHONPATH:\
 $PYTHONPATH/Scripts:\
+$LOCALAPPDATA/flutter/bin:\
 /c/Users/Matt/.bun/bin"
 
 # Final Path
-export PATH="$USER_PATH"
+export PATH="$USER_PATH:$PATH"
 
 # Manual Variables
 export APP_DATA_DIR="$TEMP"
 export VIDEO_CACHE_PATH="$APP_DATA_DIR/VideoCache"
 export API_CLIENT_TYPE="http"
+export STEAMWEB_API_KEY="$STEAMWEB_API_KEY"
+export STEAM_ID="[U:1:90260760]"

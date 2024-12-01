@@ -1,14 +1,12 @@
 {
   "[shellcheckrc]": {
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "files.eol": "\n"
+    "editor.formatOnSave": true
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format",
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "files.eol": "\n"
+    "editor.formatOnSave": true
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.shellcheck": "always"
@@ -16,12 +14,11 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "bashIde.shfmt.caseIndent": true,
-  "bashIde.shfmt.simplifyCode": true,
-  "bashIde.enableSourceErrorDiagnostics": true,
   "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
   "gitProjectManager.openInNewWindow": true,
-  "shellcheck.executablePath": "C:\\Users\\Matt\\AppData\\Local\\Volta\\tools\\image\\packages\\shellcheck\\node_modules\\shellcheck\\bin\\shellcheck.exe",
+  "shellcheck.customArgs": ["--rcfile", ".shellcheckrc"],
+  "shellcheck.enable": true,
+  "shellcheck.logLevel": "info",
   "shellcheck.run": "onType",
   "shellcheck.useWorkspaceRootAsCwd": true,
   "workbench.colorTheme": "Material Syntax - Dark"

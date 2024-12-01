@@ -13,7 +13,7 @@ if ! command -v yt-dlp &>/dev/null || ! command -v ffmpeg &>/dev/null; then
 fi
 
 # Check if there are enough arguments
-if [ "$#" -lt 7 ]; then
+if [[ "$#" -lt 7 ]]; then
   usage
 fi
 
@@ -44,17 +44,17 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
-if [ -z "$start_time" ]; then
+if [[ -z "$start_time" ]]; then
   # set to start of video
   start_time="00:00:00"
 fi
 
-if [ -z "$end_time" ]; then
+if [[ -z "$end_time" ]]; then
   # set to end of video
   end_time=$(yt-dlp --get-duration "$url")
 fi
 
-if [ -z "$output_file" ]; then
+if [[ -z "$output_file" ]]; then
   output_file="$HOME/Downloads/$(yt-dlp --get-title "$url").mp3"
 fi
 

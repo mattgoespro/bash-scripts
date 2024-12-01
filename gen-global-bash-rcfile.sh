@@ -13,10 +13,10 @@ function create-global-bashrc-file() {
     local global="$1"
     local repo="$2"
 
-    read -r -p "$(log "a bashrc file already exists at '$global'. Type [confirm] to overwrite it.")" response
+    read -r -p "$(log "a bashrc file already exists at '$global'. Type 'confirm' to overwrite it.") " response
 
     if [ "$response" != "confirm" ]; then
-        log "aborting..."
+        log "aborting."
         exit 0
     fi
 
