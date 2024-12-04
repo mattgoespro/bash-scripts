@@ -26,7 +26,11 @@
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "files.associations": {
+    ".eslintignore": "ignore"
+  },
   "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
   "gitProjectManager.baseProjectsFolders": [
     "%USERPROFILE%\\Desktop\\Code"
   ],
@@ -47,5 +51,8 @@
   "shellcheck.enable": true,
   "shellcheck.logLevel": "info",
   "shellcheck.run": "onType",
-  "shellcheck.useWorkspaceRootAsCwd": true
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.shellIntegration.enabled": false,
+  "workbench.colorTheme": "Andromeda Colorizer"
 }
