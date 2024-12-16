@@ -12,8 +12,7 @@ function show_usage() {
 yt_dlp_executable=$(command -v yt-dlp)
 
 # if yt-dlp executable is not on PATH, check common locations
-yt_dlp_search_paths=("$HOME/bin", "$HOME/Desktop/Code/Other/bash-scripts/bin","/c/ProgramData/chocolatey/bin","$LOCALAPPDATA/Microsoft/WinGet/Links")
-yt_dlp_executable=""
+yt_dlp_executable="$HOME/bin/yt-dlp.exe"
 
 if [ ! -f "$yt_dlp_executable" ]; then
     log "error: yt-dlp executable not found: $yt_dlp_executable"

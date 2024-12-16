@@ -46,17 +46,17 @@ function generated-alias-exists() {
     return 1
 }
 
-function script-has-shorthand-alias() {
+function script-has-user-alias() {
     local script_alias="$1"
 
-    if grep -q "= $script_alias" "$cwd/scripts/.shorthand-bin-aliases"; then
+    if grep -q "= $script_alias" "$cwd/.user-aliases"; then
         return 0
     fi
 
     return 1
 }
 
-function add-script-shorthand-alias() {
+function add-script-user-alias() {
     local generated_aliases_rcfile="$1"
     local script_file_name="$2"
 
@@ -71,6 +71,17 @@ function add-script-shorthand-alias() {
     else
         log "alias already exists: '$script_short_file_name'"
     fi
+}
+
+function has-sourced-script() {
+    local script_file_path="$1"
+    local sourced_script_file_path="$2"
+
+    if grep -q "$sourced_script_file_path" "$script_file_path"; then
+        return 0
+    fi
+
+    return 1
 }
 
 function add-script-aliases() {
@@ -90,8 +101,8 @@ function add-script-aliases() {
             log "alias already exists: '$filename'"
         fi
 
-        if script-has-shorthand-alias "$filename"; then
-            add-script-shorthand-alias "$filename" "$generated_aliases_rcfile"
+        if script-has-user-alias "$filename"; then
+            add-script-user-alias "$filename" "$generated_aliases_rcfile"
         fi
     done < <(find "$cwd/scripts/bin" -maxdepth 1 -name "*.sh" -type f -print0)
 }
@@ -115,29 +126,6 @@ function add-js-scripts-executable-aliases() {
     done < <(find "$(cygpath "$HOME")/Desktop/Code/Node/js-scripts/bin" -maxdepth 1 -name "*.exe" -type f -print0)
 }
 
-function add-user-defined-aliases() {
-    log "adding user-defined aliases..."
-
-    local repo_aliases="$1"
-    local manual_aliases_file
-    local manual_aliases_file="$cwd/scripts/.user-aliases"
-
-    IFS=$'\n' read -d '' -r -a aliases <"$manual_aliases_file"
-
-    for alias_cmd in "${aliases[@]}"; do
-        # get the alias name between the `alias ` and the `=`
-        local alias_name
-        alias_name="$(echo "$alias_cmd" | cut -d' ' -f2 | cut -d'=' -f1)"
-
-        if ! grep -q "$alias_name" "$repo_aliases"; then
-            echo "$alias_cmd" >>"$repo_aliases"
-            log "added manual alias: '$alias_cmd'"
-        else
-            log "alias already exists: '$alias_cmd'"
-        fi
-    done
-}
-
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
@@ -151,17 +139,16 @@ function generate-repo-bash-aliases-rcfile() {
 
     echo "#!/bin/bash" >"$repo_bash_aliases_file"
     log "created repo bash aliases rcfile: $repo_bash_aliases_file"
-    sleep 2
+    sleep 0.5
 
     add-script-aliases "$repo_bash_aliases_file"
     log "\nsuccessfully added script aliases!"
-    sleep 2
+    sleep 0.5
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
     log "\nsuccessfully added js-scripts executable aliases!"
-    sleep 2
+    sleep 0.5
 
-    add-user-defined-aliases "$repo_bash_aliases_file"
     log "\nsuccessfully added user aliases!"
 }
 

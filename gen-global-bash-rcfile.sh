@@ -7,7 +7,7 @@ function log() {
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
-source "$cwd/scripts/bin/update-else-append-file.sh"
+source "$cwd/scripts/functions.sh"
 
 function create-global-bashrc-file() {
     local global="$1"
@@ -15,14 +15,14 @@ function create-global-bashrc-file() {
 
     read -r -p "$(log "a bashrc file already exists at '$global'. Type 'confirm' to overwrite it.") " response
 
-    if [ "$response" != "confirm" ]; then
+    if [[ "$response" != "confirm" ]]; then
         log "aborting."
         exit 0
     fi
 
     backup_rcfile="$HOME/.bashrc.bak"
 
-    if [ -f "$backup_rcfile" ]; then
+    if [[ -f "$backup_rcfile" ]]; then
         rm -f "$backup_rcfile"
         log "removed existing backup of bashrc file"
     fi
@@ -62,12 +62,18 @@ function source-utility-functions() {
 
     local repo_functions="$cwd/scripts/functions.sh"
 
-    if ! grep -q "$repo_functions" "$global"; then
-        echo "source \"$repo_functions\"" >>"$global"
-        log "sourced functions from repo functions to global bashrc"
-    else
-        log "repo functions already sourced to global bashrc"
-    fi
+    echo "source \"$repo_functions\"" >>"$global"
+    log "added source of repo functions to global bashrc"
+}
+function add-user-defined-aliases() {
+    log "adding user-defined aliases..."
+
+    local repo_aliases="$1"
+    local manual_aliases_file
+    local manual_aliases_file="$cwd/scripts/.user-aliases"
+
+    echo "source \"$manual_aliases_file\"" >>"$repo_aliases"
+    log "added source of user-defined aliases to repo bash_aliases"
 }
 
 global_bashrc_file="$HOME/.bashrc"

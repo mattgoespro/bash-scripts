@@ -20,7 +20,9 @@ function edit-env() {
 
 function reload() {
     # shellcheck disable=SC1091
-    . "$HOME/.bashrc"
+    . "$HOME/.bashrc" && {
+        echo "reloaded $HOME/.bashrc"
+    }
 }
 
 function update-else-append-file() {
