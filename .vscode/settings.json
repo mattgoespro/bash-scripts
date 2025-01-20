@@ -1,5 +1,6 @@
 {
   "[shellcheckrc]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
@@ -8,18 +9,20 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
+  "bashIde.backgroundAnalysisMaxFiles": 50000,
+  "bashIde.globPattern": "**/*.sh",
+  "bashIde.shellcheckPath": "",
   "editor.codeActionsOnSave": {
     "source.fixAll.shellcheck": "always"
   },
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.defaultLanguage": "shellscript",
+  "code-runner.runInTerminal": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
   "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
   "gitProjectManager.openInNewWindow": true,
-  "shellcheck.customArgs": ["--rcfile", ".shellcheckrc"],
-  "shellcheck.enable": true,
-  "shellcheck.logLevel": "info",
-  "shellcheck.run": "onType",
-  "shellcheck.useWorkspaceRootAsCwd": true,
+  "shellcheck.logLevel": "trace",
   "workbench.colorTheme": "Material Syntax - Dark"
 }

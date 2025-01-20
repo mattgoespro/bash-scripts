@@ -15,11 +15,11 @@ PROGRAMFILES="/c/Program Files"
 LOCALAPPDATA="/c/Users/Matt/AppData/Local"
 
 # System Programs
-ANDROID_STUDIO="$PROGRAMFILES/Android/Android Studio"
 CHOCOLATEY="$PROGRAMDATA/chocolatey"
 GIT="$PROGRAMFILES/Git"
 VOLTA="$PROGRAMFILES/Volta"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
+IMAGEMAGICK="$PROGRAMFILES/ImageMagick"
 
 USER_PATH="$CHOCOLATEY/bin:\
 $GIT/bin:\
@@ -27,7 +27,8 @@ $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
 $SUBLIME_TEXT:\
-$VOLTA"
+$VOLTA:\
+$IMAGEMAGICK"
 
 # User
 export APPDATA="$HOME/AppData/Roaming"
@@ -37,12 +38,16 @@ export HOME="$USER"
 export BASH_SCRIPTS="$HOME/Desktop/Code/Other/bash-scripts"
 
 # Local Application Data
+CONDA_LOCAL="$LOCALAPPDATA/Programs/miniconda3"
 VOLTA_LOCAL="$LOCALAPPDATA/Volta"
 PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python"
+TINYTEXT_LOCAL="$LOCALAPPDATA/Programs/TinyTeX"
 
 USER_PATH="$USER_PATH:\
 $VOLTA_LOCAL:\
-$VOLTA_LOCAL/bin"
+$VOLTA_LOCAL/bin:\
+$CONDA_LOCAL/Scripts:\
+$TINYTEXT_LOCAL/bin/windows"
 
 # Android Studio Paths
 ANDROID_SDK_HOME="$LOCALAPPDATA/Android/Sdk"
@@ -74,10 +79,3 @@ $LOCALAPPDATA/flutter/bin:\
 
 # Final Path
 export PATH="$USER_PATH:$PATH"
-
-# `js-scripts` required environment variable values
-export APP_DATA_DIR="$TEMP"
-export VIDEO_CACHE_PATH="$APP_DATA_DIR/VideoCache"
-export YOUTUBE_API_CLIENT="http"
-export STEAMWEB_API_KEY="$STEAMWEB_API_KEY"
-export STEAM_ID="[U:1:90260760]"

@@ -11,6 +11,7 @@
     "foxundermoon.shell-format",
     "github.copilot",
     "github.copilot-chat",
-    "woodywoodsta.vscode-material-syntax-dark"
+    "woodywoodsta.vscode-material-syntax-dark",
+    "formulahendry.code-runner"
   ]
 }

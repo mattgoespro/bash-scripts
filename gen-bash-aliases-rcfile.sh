@@ -109,12 +109,20 @@ function add-script-aliases() {
 
 function add-js-scripts-executable-aliases() {
     local generated_aliases_rcfile="$1"
+    local js_scripts_executables_dir
+    js_scripts_executables_dir="$(cygpath "$HOME")/Desktop/Code/Node/js-scripts/dist"
+    js_scripts_executables_ext=".exe"
 
-    log "generating aliases for js-scripts executables..."
+    if [[ ! -d "$js_scripts_executables_dir" ]]; then
+        log "(error) js-scripts executables directory hasn't been compile in directory '$js_scripts_executables_dir'"
+        return 1
+    fi
+
+    log "generating aliases for js-scripts executables in directory '$js_scripts_executables_dir'"
 
     while IFS= read -r -d '' executable_file_path; do
         local filename
-        filename="$(basename "$executable_file_path" .exe)"
+        filename="$(basename "$executable_file_path" "$js_scripts_executables_ext")"
         local alias_definition="alias $filename=\"$executable_file_path\""
 
         if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
@@ -123,14 +131,14 @@ function add-js-scripts-executable-aliases() {
         else
             log "js-scripts executable alias already exists: '$filename'"
         fi
-    done < <(find "$(cygpath "$HOME")/Desktop/Code/Node/js-scripts/bin" -maxdepth 1 -name "*.exe" -type f -print0)
+    done < <(find "$js_scripts_executables_dir" -maxdepth 1 -name "*.exe" -type f -print0)
 }
 
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
     log "generating repo bash aliases rcfile..."
-    sleep 1
+    sleep 0.5
 
     if [[ -f "$repo_bash_aliases_file" ]]; then
         rm -f "$repo_bash_aliases_file"
@@ -153,6 +161,6 @@ function generate-repo-bash-aliases-rcfile() {
 }
 
 generate-repo-bash-aliases-rcfile || {
-    log "error: failed to generate repo bash aliases rcfile."
+    log "error: failed to generate bash aliases rcfile in repository"
     exit 1
 }
