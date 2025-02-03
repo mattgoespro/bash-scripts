@@ -1,5 +1,5 @@
+# shellcheck disable=SC2148
 alias meditation-picker="\$HOME/Desktop/Code/Node/js-scripts/dist/meditation-picker.exe"
 alias env="env | sort"
 alias sdkmanager="\$LOCALAPPDATA/Android/Sdk/cmdline-tools/latest/bin/sdkmanager.bat"
 alias avdmanager="\$LOCALAPPDATA/Android/Sdk/cmdline-tools/latest/bin/avdmanager.bat"
-alias tlmgr="\$LOCALAPPDATA/Programs/TinyTeX/bin/windows/tlmgr.bat"

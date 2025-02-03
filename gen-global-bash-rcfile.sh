@@ -10,73 +10,75 @@ cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$cwd/scripts/functions.sh"
 
 function create-global-bashrc-file() {
-    local global="$1"
-    local repo="$2"
+    local global_bashrc_file_path="$1"
+    local repo_bashrc_file_path="$2"
 
-    read -r -p "$(log "a bashrc file already exists at '$global'. Type 'confirm' to overwrite it.") " response
+    read -r -p "$(log "a bashrc file already exists at '$global_bashrc_file_path'. Type 'confirm' to overwrite it:") " response
 
     if [[ "$response" != "confirm" ]]; then
         log "aborting."
-        exit 0
+        exit 1
     fi
 
-    backup_rcfile="$HOME/.bashrc.bak"
+    global_bashrc_backup_file_path="$HOME/.bashrc.bak"
 
-    if [[ -f "$backup_rcfile" ]]; then
-        rm -f "$backup_rcfile"
+    if [[ -f "$global_bashrc_backup_file_path" ]]; then
+        rm -f "$global_bashrc_backup_file_path"
         log "removed existing backup of bashrc file"
     fi
 
-    cat "$global" >"$backup_rcfile"
-    log "created backup of bashrc file: $backup_rcfile"
+    cat "$global_bashrc_file_path" >"$global_bashrc_backup_file_path"
+    log "created backup of bashrc file: $global_bashrc_backup_file_path"
 
-    rm -f "$global"
+    rm -f "$global_bashrc_file_path"
     log "removed existing bashrc file"
 
     log "initializing, creating bashrc file..."
-    touch "$global"
+    touch "$global_bashrc_file_path"
 
     # source this bashrc file
     {
-        echo "#!/bin/bash" >>"$global"
+        echo "#!/bin/bash" >>"$global_bashrc_file_path"
 
         echo "# shellcheck source=/dev/null"
-        echo ". \"$repo\""
-    } >>"$global"
+        echo ". \"$repo_bashrc_file_path\""
+    } >>"$global_bashrc_file_path"
 }
 
 function source-repo-bash-aliases() {
-    local global="$1"
-    local repo="$2"
+    local global_aliases_file_path="$1"
+    local repo_aliases_file_path="$2"
 
     log "sourcing bash aliases..."
 
-    echo "source \"$repo\"" >>"$global"
+    echo "source \"$repo_aliases_file_path\"" >>"$global_aliases_file_path"
     log "added source of repo bash_aliases to global bashrc"
 }
 
 function source-utility-functions() {
-    local global="$1"
+    local global_bashrc_file_path="$1"
 
     log "sourcing functions..."
 
     local repo_functions="$cwd/scripts/functions.sh"
 
-    echo "source \"$repo_functions\"" >>"$global"
+    echo "source \"$repo_functions\"" >>"$global_bashrc_file_path"
     log "added source of repo functions to global bashrc"
 }
-function add-user-defined-aliases() {
+
+function add-user-aliases() {
     log "adding user-defined aliases..."
 
     local repo_aliases="$1"
-    local manual_aliases_file
-    local manual_aliases_file="$cwd/scripts/.user-aliases"
+    local user_aliases_file
+    local user_aliases_file="$cwd/scripts/.user-aliases"
 
-    echo "source \"$manual_aliases_file\"" >>"$repo_aliases"
+    echo "source \"$user_aliases_file\"" >>"$repo_aliases"
     log "added source of user-defined aliases to repo bash_aliases"
 }
 
-global_bashrc_file="$HOME/.bashrc"
+global_bashrc_file=$(cygpath "$HOME/.bashrc")
+echo "global_bashrc_file: $global_bashrc_file"
 repo_bashrc_file="$cwd/.bashrc"
 
 repo_bash_aliases_file="$cwd/.bash_aliases"

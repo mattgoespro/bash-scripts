@@ -73,17 +73,6 @@ function add-script-user-alias() {
     fi
 }
 
-function has-sourced-script() {
-    local script_file_path="$1"
-    local sourced_script_file_path="$2"
-
-    if grep -q "$sourced_script_file_path" "$script_file_path"; then
-        return 0
-    fi
-
-    return 1
-}
-
 function add-script-aliases() {
     local generated_aliases_rcfile="$1"
 

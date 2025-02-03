@@ -12,6 +12,10 @@ function goto-js-scripts() {
     cd "$HOME/Desktop/Code/Node/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
 }
 
+function home() {
+    echo "navigating home..."
+}
+
 function edit-env() {
     # shellcheck disable=SC2154
     # open the .bashrc file at the project's root
@@ -53,16 +57,12 @@ function chrome-debug() {
 }
 
 function find-file() {
-    function usage() {
-        echo "Usage: find-file <file-name> [search-dir]"
-        echo "  file-name: the name of the file to search for"
-        echo "  search-dir: the directory to search in (default: current directory)"
-    }
-
     local file_name="$1"
 
     if [[ -z "$file_name" ]]; then
-        usage
+        echo "Usage: find-file <file-name> [search-dir]"
+        echo "  file-name: the name of the file to search for"
+        echo "  search-dir: the directory to search in (default: current directory)"
         return 1
     fi
 
@@ -81,16 +81,12 @@ function find-file() {
 }
 
 function find-dir() {
-    function usage() {
-        echo "Usage: find-dir <dir-name> [search-dir]"
-        echo "  dir-name: the name of the directory to search for"
-        echo "  search-dir: the directory to search in (default: current directory)"
-    }
-
     local dir_name="$1"
 
     if [[ -z "$dir_name" ]]; then
-        usage
+        echo "Usage: find-dir <dir-name> [search-dir]"
+        echo "  dir-name: the name of the directory to search for"
+        echo "  search-dir: the directory to search in (default: current directory)"
         return 1
     fi
 
@@ -107,7 +103,3 @@ function find-dir() {
 
     find "$search_dir" -type d -name "$dir_name"
 }
-
-# function vscode-open-bash-scripts() {
-#     code "$BASH_SCRIPTS"
-# }
