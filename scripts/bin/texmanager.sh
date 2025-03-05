@@ -52,7 +52,9 @@ install)
         exit 1 >>/dev/null
     fi
 
-    tlmgr-install "$2"
+    shift 1
+
+    tlmgr-install "$*"
     ;;
 *)
     echo "Usage: texmanager <search | install> [package_name]"

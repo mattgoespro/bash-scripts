@@ -5,31 +5,37 @@ if ! command -v subl &>/dev/null; then
     exit 1
 fi
 
-arg_path="$1"
+open_path="$1"
 
-if [[ -z "$arg_path" ]]; then
+if [[ -z "$open_path" ]]; then
     echo "Usage: open <path>"
     exit 1
 fi
 
-absolute_path=$(realpath "$arg_path")
+open_path_absolute=$(cygpath -w "$(realpath "$open_path")")
+echo "info: converting '$open_path' to absolute path: '$open_path_absolute'"
 
-if [[ -d "$absolute_path" ]]; then
-    read -t 0.5 -rp "Opening '$absolute_path' in explorer..."
-    explorer "$absolute_path"
+if [[ -d "$open_path_absolute" ]]; then
+    if [[ -d "$open_path_absolute\\.git" ]]; then
+        read -t 0.5 -rp "Opening repository '$open_path_absolute' in Visual Studio Code..."
+        code "$open_path_absolute"
+        exit 0
+    fi
+
+    explorer "$open_path_absolute"
     exit 0
 fi
 
-if [[ ! -f "$absolute_path" ]]; then
-    read -rp "Path '$absolute_path' not found, open a new file at this directory? [y/n] (default: n) " response
+if [[ ! -f "$open_path_absolute" ]]; then
+    read -rp "Path '$open_path_absolute' not found, open a new file at this directory? [y/n] (default: n) " response
 
     if [[ "$response" != "y" ]]; then
         exit 1
     fi
 fi
 
-read -t 0.5 -rp "Opening '$absolute_path'..."
+read -t 0.5 -rp "Opening '$open_path_absolute'..."
 
-subl "$absolute_path"
+subl "$open_path_absolute"
 
 exit 0

@@ -16,7 +16,6 @@ source "$HOME/Desktop/Code/Other/bash-scripts/.user-aliases"
 PROGRAMDATA="${PROGRAMDATA:-}"
 PROGRAMFILES="${PROGRAMFILES:-}"
 
-
 #####################################################################
 #                                                                   #
 #                      SYSTEM APPLICATIONS                          #
@@ -34,14 +33,12 @@ $GIT/usr/bin:\
 $SUBLIME_TEXT:\
 $IMAGEMAGICK"
 
-
 #####################################################################
 #                                                                   #
 #                       USER DIRECTORIES                            #
 #                                                                   #
 #####################################################################
 LOCALAPPDATA="${LOCALAPPDATA:-}"
-
 
 #####################################################################
 #                                                                   #
@@ -58,7 +55,6 @@ $SCOOP/apps:\
 $CHOCOLATEY/bin:\
 $VOLTA"
 
-
 #####################################################################
 #                                                                   #
 #                      VOLTA APPLICATIONS                           #
@@ -69,21 +65,22 @@ NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/20.17.0"
 USER_PATH="$USER_PATH:\
 $NODE_LOCAL"
 
-
 #####################################################################
 #                                                                   #
 #                      LOCAL APPLICATIONS                           #
 #                                                                   #
 #####################################################################
 VOLTA_LOCAL="$LOCALAPPDATA/Volta"
+PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python/Python312"
 SCOOP_LOCAL="$HOME/scoop"
 TINYTEXT_LOCAL="$LOCALAPPDATA/Programs/TinyTeX"
 
 USER_PATH="$USER_PATH:\
+$PYTHON_LOCAL:\
+$PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
 $VOLTA_LOCAL/bin:\
 $TINYTEXT_LOCAL/bin/windows"
-
 
 #####################################################################
 #                                                                   #
@@ -100,20 +97,18 @@ $ANDROID_SDK_CLI_TOOLS:\
 $ANDROID_SDK_PLATFORM_TOOLS:\
 $ANDROID_SDK_EMULATOR"
 
-
 #####################################################################
 #                                                                   #
 #                    APPLICATION CONFIGURATION                      #
 #                                                                   #
 #####################################################################
 export JAVA_HOME="$HOME/.jdks/corretto-20.0.2.1"
+export TEXINPUTS="$SCOOP_LOCAL/apps/texlive/2025.02/texmf-dist"
 
 USER_PATH="$USER_PATH:\
 $JAVA_HOME/bin:\
 $LOCALAPPDATA/flutter/bin:\
 $HOME/.bun/bin"
-
-
 
 #####################################################################
 #                                                                   #

@@ -1,5 +1,7 @@
 {
   "recommendations": [
+    "github.copilot",
+    "github.copilot-chat",
     "shakram02.bash-beautify",
     "rogalmic.bash-debug",
     "usernamehw.errorlens",
@@ -9,9 +11,8 @@
     "esbenp.prettier-vscode",
     "felipecaputo.git-project-manager",
     "foxundermoon.shell-format",
-    "github.copilot",
-    "github.copilot-chat",
     "woodywoodsta.vscode-material-syntax-dark",
-    "formulahendry.code-runner"
+    "mads-hartmann.bash-ide-vscode",
+    "eamodio.gitlens"
   ]
 }
