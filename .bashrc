@@ -33,17 +33,13 @@ fi
 #####################################################################
 GIT="$PROGRAMFILES/Git"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
-IMAGEMAGICK="$PROGRAMFILES/ImageMagick"
-GO="$PROGRAMFILES/Go"
 
 USER_PATH="$CHOCOLATEY/bin:\
 $GIT/bin:\
 $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
-$SUBLIME_TEXT:\
-$IMAGEMAGICK:\
-$GO/bin"
+$SUBLIME_TEXT"
 
 #####################################################################
 #                                                                   #
