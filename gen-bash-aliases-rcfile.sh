@@ -2,13 +2,47 @@
 
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+function color() {
+    if [[ "$#" -ne 2 ]]; then
+        echo "Usage: color <color> <message>"
+        return 1
+    fi
+
+    message="$1"
+    color="$2"
+
+    case "$2" in
+    green)
+        echo -e "\033[0;32m$message\033[0m"
+        ;;
+    dark-grey)
+        echo -e "\033[0;90m$message\033[0m"
+        ;;
+    red)
+        echo -e "\033[0;31m$message\033[0m"
+        ;;
+    yellow)
+        echo -e "\033[0;33m$message\033[0m"
+        ;;
+    blue)
+        echo -e "\033[0;34m$message\033[0m"
+        ;;
+    *)
+        echo "Unknown color: $color"
+        exit 1
+        ;;
+    esac
+
+    return 0
+}
+
 function log() {
     local prefix="gen-bash-aliases-rcfile: "
     local message="$1"
 
     # Split the message by newline and append the prefix to each line
     while IFS= read -r line; do
-        echo "${prefix}${line}"
+        echo "$(color "$prefix" blue)${line}"
     done <<<"$(echo -e "$message")"
 }
 
@@ -67,16 +101,16 @@ function add-script-user-alias() {
 
     if ! generated-alias-exists "$generated_aliases_rcfile" "$script_short_file_name"; then
         echo "$alias_definition" >>"$generated_aliases_rcfile"
-        log "added '$filename' short alias: '$script_short_file_name' -> '$script_file_name'"
+        log "added '$(color "$filename" dark-grey)' short alias: '$(color "$script_short_file_name" yellow)' -> '$(color "$script_file_name'" green)"
     else
-        log "alias already exists: '$script_short_file_name'"
+        log "$(color "alias already exists: '$script_short_file_name'" yellow)"
     fi
 }
 
 function add-script-aliases() {
     local generated_aliases_rcfile="$1"
 
-    log "generating script aliases..."
+    log "$(color "generating script aliases..." blue)"
 
     while IFS= read -r -d '' script_file_path; do
         local filename
@@ -85,9 +119,9 @@ function add-script-aliases() {
 
         if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
             echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "added alias: '$filename' -> '$script_file_path'"
+            log "$(color "added alias" "dark-grey"): '$(color "$filename" yellow)' -> '$(color "$script_file_path'" green)"
         else
-            log "alias already exists: '$filename'"
+            log "$(color "alias already exists: '$filename'" dark-grey)"
         fi
 
         if script-has-user-alias "$filename"; then
@@ -103,11 +137,11 @@ function add-js-scripts-executable-aliases() {
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
-        log "(error) js-scripts executables directory hasn't been compile in directory '$js_scripts_executables_dir'"
+        log "$(color "[error] js-scripts executables directory hasn't been compile in directory '$js_scripts_executables_dir'" red)"
         return 1
     fi
 
-    log "generating aliases for js-scripts executables in directory '$js_scripts_executables_dir'"
+    log "$(color "generating aliases for js-scripts executables in directory '$js_scripts_executables_dir'" blue)"
 
     while IFS= read -r -d '' executable_file_path; do
         local filename
@@ -116,9 +150,9 @@ function add-js-scripts-executable-aliases() {
 
         if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
             echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "added js-scripts executable alias: '$filename' -> '$executable_file_path'"
+            log "$(color "added js-scripts executable alias" "dark-grey"): '$(color "$filename" yellow)' -> '$(color "$executable_file_path'" green)"
         else
-            log "js-scripts executable alias already exists: '$filename'"
+            log "$(color "js-scripts executable alias already exists: '$filename'" dark-grey)"
         fi
     done < <(find "$js_scripts_executables_dir" -maxdepth 1 -name "*.exe" -type f -print0)
 }
@@ -126,30 +160,30 @@ function add-js-scripts-executable-aliases() {
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
-    log "generating repo bash aliases rcfile..."
+    log "$(color "generating repo bash aliases rcfile..." dark-grey)"
     sleep 0.5
 
     if [[ -f "$repo_bash_aliases_file" ]]; then
         rm -f "$repo_bash_aliases_file"
-        log "removed existing repo bash aliases rcfile"
+        log "$(color "removed existing repo bash aliases rcfile: $repo_bash_aliases_file" dark-grey)"
     fi
 
     echo "#!/bin/bash" >"$repo_bash_aliases_file"
-    log "created repo bash aliases rcfile: $repo_bash_aliases_file"
+    log "$(color "created repo bash aliases rcfile: $repo_bash_aliases_file" dark-grey)"
     sleep 0.5
 
     add-script-aliases "$repo_bash_aliases_file"
-    log "\nsuccessfully added script aliases!"
+    log "\n$(color "successfully added script aliases!" green)"
     sleep 0.5
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
-    log "\nsuccessfully added js-scripts executable aliases!"
+    log "\n$(color "successfully added js-scripts executable aliases!" green)"
     sleep 0.5
 
-    log "\nsuccessfully added user aliases!"
+    log "\n$(color "successfully added user aliases!" green)"
 }
 
 generate-repo-bash-aliases-rcfile || {
-    log "error: failed to generate bash aliases rcfile in repository"
+    log "$(color "error: failed to generate repo bash aliases rcfile" red)"
     exit 1
 }

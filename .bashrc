@@ -13,8 +13,18 @@ source "$HOME/Desktop/Code/Other/bash-scripts/.user-aliases"
 #                       SYSTEM DIRECTORIES                          #
 #                                                                   #
 #####################################################################
-PROGRAMDATA="${PROGRAMDATA:-}"
-PROGRAMFILES="${PROGRAMFILES:-}"
+
+PROGRAMDATA=
+
+if [[ -z "$PROGRAMDATA" ]]; then
+    PROGRAMDATA="/c/ProgramData"
+fi
+
+PROGRAMFILES=
+
+if [[ -z "$PROGRAMFILES" ]]; then
+    PROGRAMFILES="/c/Program Files"
+fi
 
 #####################################################################
 #                                                                   #
@@ -24,6 +34,7 @@ PROGRAMFILES="${PROGRAMFILES:-}"
 GIT="$PROGRAMFILES/Git"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
 IMAGEMAGICK="$PROGRAMFILES/ImageMagick"
+GO="$PROGRAMFILES/Go"
 
 USER_PATH="$CHOCOLATEY/bin:\
 $GIT/bin:\
@@ -31,7 +42,8 @@ $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
 $SUBLIME_TEXT:\
-$IMAGEMAGICK"
+$IMAGEMAGICK:\
+$GO/bin"
 
 #####################################################################
 #                                                                   #
@@ -48,12 +60,13 @@ LOCALAPPDATA="${LOCALAPPDATA:-}"
 SCOOP="$HOME/scoop"
 CHOCOLATEY="$PROGRAMDATA/chocolatey"
 VOLTA="$PROGRAMFILES/Volta"
+PNPM="$LOCALAPPDATA/pnpm"
 
 USER_PATH="$USER_PATH:\
 $SCOOP/shims:\
-$SCOOP/apps:\
 $CHOCOLATEY/bin:\
-$VOLTA"
+$VOLTA:\
+$PNPM"
 
 #####################################################################
 #                                                                   #
