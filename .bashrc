@@ -69,7 +69,7 @@ $PNPM"
 #                      VOLTA APPLICATIONS                           #
 #                                                                   #
 #####################################################################
-NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/20.17.0"
+NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/22.14.0"
 
 USER_PATH="$USER_PATH:\
 $NODE_LOCAL"
