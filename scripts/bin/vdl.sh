@@ -8,25 +8,26 @@ function show_usage() {
     echo "usage: vdl \"<url>\" [-a|--audio] [output_filename]"
 }
 
-# if yt-dlp executable is not on PATH, check common locations
-yt_dlp_executable="$HOME\\.bin\\yt-dlp.exe"
+yt_dlp_executable=""
 
-if [[ ! -f "$yt_dlp_executable" ]]; then
-    log "error: yt-dlp executable not found: $yt_dlp_executable"
-    log "download the executable from the yt-dlp GitHub releases page: https://github.com/yt-dlp/yt-dlp/releases"
-    exit 1
+if command -v yt-dlp &>/dev/null; then
+    yt_dlp_executable="yt-dlp"
+else
+    for exe_location in $(
+        "$HOME/scoop/shim/yt-dlp.exe"
+        "${LOCALAPPDATA:?}/Microsoft/WinGet/Links/yt-dlp.exe"
+    ); do
+        if [[ -f "$exe_location" ]]; then
+            yt_dlp_executable="$exe_location"
+            break
+        fi
+    done
 fi
 
-if [[ $# -eq 0 ]] || [[ -z "$1" ]]; then
-    show_usage
+if [[ -z "$yt_dlp_executable" ]]; then
+    log "error: download yt-dlp before using this script."
     exit 1
 fi
-
-# the URL must be quoted if it contains an ampersand
-# if [[ "$1" == *"&"* ]]; then
-#     log "error: url must be quoted."
-#     exit 1
-# fi
 
 audio_flag=""
 
@@ -41,7 +42,6 @@ while getopts ":a:" opt; do
         show_usage
         exit 1
         ;;
-
     esac
 done
 
@@ -61,4 +61,4 @@ download_path="$HOME\\Downloads\\$output_filename"
 
 read -r -t 1 -p "downloading video $url ..." -n 1
 
-$yt_dlp_executable "$audio_flag" "$url" -o "$download_path"
+yt-dlp "$audio_flag" "$url" -o "$download_path"

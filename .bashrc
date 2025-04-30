@@ -116,9 +116,8 @@ export TEXINPUTS="$SCOOP_LOCAL/apps/texlive/2025.02/texmf-dist"
 
 USER_PATH="$USER_PATH:\
 $JAVA_HOME/bin:\
-$LOCALAPPDATA/flutter/bin:\
-$HOME/.bun/bin"
-
+$LOCALAPPDATA/flutter/bin
+"
 #####################################################################
 #                                                                   #
 #                     REPORITORY DIRECTORIES                        #

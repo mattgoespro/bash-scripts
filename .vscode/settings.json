@@ -21,5 +21,5 @@
   "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
   "gitProjectManager.openInNewWindow": true,
   "shellcheck.logLevel": "trace",
-  "workbench.colorTheme": "Default Dark Modern"
+  "workbench.colorTheme": "Material Syntax - Dark"
 }

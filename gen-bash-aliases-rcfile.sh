@@ -137,7 +137,7 @@ function add-js-scripts-executable-aliases() {
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
-        log "$(color "[error] js-scripts executables directory hasn't been compile in directory '$js_scripts_executables_dir'" red)"
+        log "$(color "[error] js-scripts executables in directory '$js_scripts_executables_dir' haven't been compiled, skipping." red) "
         return 1
     fi
 

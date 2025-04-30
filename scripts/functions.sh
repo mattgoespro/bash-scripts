@@ -12,6 +12,53 @@ function goto-js-scripts() {
     cd "$HOME/Desktop/Code/Node/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
 }
 
+function goto() {
+    function usage() {
+        echo "Usage: goto <directory-alias>"
+        echo "Available directory aliases:"
+        echo "  desktop"
+        echo "  code"
+        echo "  js-scripts"
+        echo "  bash-scripts"
+        echo "  icons"
+    }
+
+    if [[ $# -eq 0 ]]; then
+        usage
+        return 1
+    fi
+
+    dirmap=(
+        [desktop]="$HOME/Desktop"
+        [code]="$HOME/Desktop/Code"
+        ["js-scripts"]="$HOME/Desktop/Code/Node/js-scripts"
+        ["bash-scripts"]="$HOME/Desktop/Code/Node/bash-scripts"
+        [icons]="$LOCALAPPDATA/Icons"
+    )
+
+    alias="$1"
+    target_dir="${dirmap[$alias]}"
+
+    if [[ -z "$target_dir" ]]; then
+        echo "Error: Unknown directory alias '$alias'."
+        usage
+        exit 1
+    fi
+
+    if [[ ! -d "$target_dir" ]]; then
+        echo "Error: Alias '$alias' target directory '$target_dir' does not yet exist."
+        exit 1
+    fi
+
+    cd "$target_dir" || {
+        echo "Error: Could not change directory to '$target_dir'."
+        exit 1
+    }
+
+    echo "Navigated to alias '$alias'."
+    return 0
+}
+
 function home() {
     echo "navigating home..."
 }
