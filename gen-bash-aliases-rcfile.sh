@@ -2,6 +2,8 @@
 
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+user_aliases_file_name=".user_aliases"
+
 function color() {
     if [[ "$#" -ne 2 ]]; then
         echo "Usage: color <color> <message>"
@@ -83,7 +85,7 @@ function generated-alias-exists() {
 function script-has-user-alias() {
     local script_alias="$1"
 
-    if grep -q "= $script_alias" "$cwd/.user-aliases"; then
+    if grep -q "= $script_alias" "$cwd/$user_aliases_file_name"; then
         return 0
     fi
 

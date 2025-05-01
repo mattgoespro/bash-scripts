@@ -6,25 +6,14 @@ source "$HOME/Desktop/Code/Other/bash-scripts/scripts/functions.sh"
 # shellcheck source=/dev/null
 source "$HOME/Desktop/Code/Other/bash-scripts/.bash_aliases"
 
-source "$HOME/Desktop/Code/Other/bash-scripts/.user-aliases"
+source "$HOME/Desktop/Code/Other/bash-scripts/.user_aliases"
 
 #####################################################################
 #                                                                   #
 #                       SYSTEM DIRECTORIES                          #
 #                                                                   #
 #####################################################################
-
-PROGRAMDATA=
-
-if [[ -z "$PROGRAMDATA" ]]; then
-    PROGRAMDATA="/c/ProgramData"
-fi
-
-PROGRAMFILES=
-
-if [[ -z "$PROGRAMFILES" ]]; then
-    PROGRAMFILES="/c/Program Files"
-fi
+PROGRAMFILES=$(cygpath "${PROGRAMFILES:-}")
 
 #####################################################################
 #                                                                   #
@@ -34,8 +23,7 @@ fi
 GIT="$PROGRAMFILES/Git"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
 
-USER_PATH="$CHOCOLATEY/bin:\
-$GIT/bin:\
+USER_PATH="$GIT/bin:\
 $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
@@ -46,7 +34,8 @@ $SUBLIME_TEXT"
 #                       USER DIRECTORIES                            #
 #                                                                   #
 #####################################################################
-LOCALAPPDATA="${LOCALAPPDATA:-}"
+LOCALAPPDATA=$(cygpath "${LOCALAPPDATA:-}")
+export LOCALAPPDATA
 
 #####################################################################
 #                                                                   #
@@ -54,25 +43,9 @@ LOCALAPPDATA="${LOCALAPPDATA:-}"
 #                                                                   #
 #####################################################################
 SCOOP="$HOME/scoop"
-CHOCOLATEY="$PROGRAMDATA/chocolatey"
-VOLTA="$PROGRAMFILES/Volta"
-PNPM="$LOCALAPPDATA/pnpm"
 
 USER_PATH="$USER_PATH:\
-$SCOOP/shims:\
-$CHOCOLATEY/bin:\
-$VOLTA:\
-$PNPM"
-
-#####################################################################
-#                                                                   #
-#                      VOLTA APPLICATIONS                           #
-#                                                                   #
-#####################################################################
-NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/22.14.0"
-
-USER_PATH="$USER_PATH:\
-$NODE_LOCAL"
+$SCOOP/shims"
 
 #####################################################################
 #                                                                   #
@@ -81,15 +54,22 @@ $NODE_LOCAL"
 #####################################################################
 VOLTA_LOCAL="$LOCALAPPDATA/Volta"
 PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python/Python312"
-SCOOP_LOCAL="$HOME/scoop"
-TINYTEXT_LOCAL="$LOCALAPPDATA/Programs/TinyTeX"
 
 USER_PATH="$USER_PATH:\
 $PYTHON_LOCAL:\
 $PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
-$VOLTA_LOCAL/bin:\
-$TINYTEXT_LOCAL/bin/windows"
+$VOLTA_LOCAL/bin"
+
+#####################################################################
+#                                                                   #
+#                      VOLTA APPLICATIONS                           #
+#                                                                   #
+#####################################################################
+NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/23.11.0"
+
+USER_PATH="$USER_PATH:\
+$NODE_LOCAL"
 
 #####################################################################
 #                                                                   #
@@ -97,27 +77,38 @@ $TINYTEXT_LOCAL/bin/windows"
 #                                                                   #
 #####################################################################
 ANDROID_SDK_HOME="$LOCALAPPDATA/Android/Sdk"
-ANDROID_SDK_CLI_TOOLS="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
-ANDROID_SDK_PLATFORM_TOOLS="$ANDROID_SDK_HOME/platform-tools"
-ANDROID_SDK_EMULATOR="$ANDROID_SDK_HOME/emulator"
 
-USER_PATH="$USER_PATH:\
-$ANDROID_SDK_CLI_TOOLS:\
-$ANDROID_SDK_PLATFORM_TOOLS:\
-$ANDROID_SDK_EMULATOR"
+if [[ -d "$ANDROID_SDK_HOME" ]]; then
+    echo "Android SDK found at $ANDROID_SDK_HOME"
+    echo "Configuring environment for Android SDK..."
+    ANDROID_SDK_CLI_TOOLS="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
+    ANDROID_SDK_PLATFORM_TOOLS="$ANDROID_SDK_HOME/platform-tools"
+    ANDROID_SDK_EMULATOR="$ANDROID_SDK_HOME/emulator"
+
+    USER_PATH="$USER_PATH:\
+    $ANDROID_SDK_CLI_TOOLS:\
+    $ANDROID_SDK_PLATFORM_TOOLS:\
+    $ANDROID_SDK_EMULATOR"
+fi
 
 #####################################################################
 #                                                                   #
 #                    APPLICATION CONFIGURATION                      #
 #                                                                   #
 #####################################################################
-export JAVA_HOME="$HOME/.jdks/corretto-20.0.2.1"
-export TEXINPUTS="$SCOOP_LOCAL/apps/texlive/2025.02/texmf-dist"
+JAVA_HOME="$HOME/.jdks/corretto-20.0.2.1"
 
-USER_PATH="$USER_PATH:\
-$JAVA_HOME/bin:\
-$LOCALAPPDATA/flutter/bin
-"
+if [[ -d "$JAVA_HOME" ]]; then
+    echo "Java found at $JAVA_HOME"
+    echo "Configuring environment for Java..."
+
+    export JAVA_HOME
+
+    USER_PATH="$USER_PATH:\
+        $JAVA_HOME/bin:\
+        $LOCALAPPDATA/flutter/bin"
+fi
+
 #####################################################################
 #                                                                   #
 #                     REPORITORY DIRECTORIES                        #
@@ -126,4 +117,4 @@ $LOCALAPPDATA/flutter/bin
 export BASH_SCRIPTS="$HOME/Desktop/Code/Other/bash-scripts"
 
 # Final Path
-export PATH="$USER_PATH:$PATH"
+export PATH="$USER_PATH"

@@ -1,4 +1,6 @@
 # shellcheck disable=SC2148
+LOCALAPPDATA="$(cygpath "${LOCALAPPDATA:-}")"
+
 alias meditation-picker="\$HOME/Desktop/Code/Node/js-scripts/dist/meditation-picker.exe"
 alias env="env | sort"
 alias sdkmanager="\$LOCALAPPDATA/Android/Sdk/cmdline-tools/latest/bin/sdkmanager.bat"

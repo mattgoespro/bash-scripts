@@ -46,21 +46,25 @@ function goto() {
     fi
 
     if [[ ! -d "$target_dir" ]]; then
-        echo "Error: Alias '$alias' target directory '$target_dir' does not yet exist."
+        echo "error: alias '$alias' target directory '$target_dir' does not yet exist."
         exit 1
     fi
 
     cd "$target_dir" || {
-        echo "Error: Could not change directory to '$target_dir'."
+        echo "error: could not change directory to '$target_dir'."
         exit 1
     }
 
-    echo "Navigated to alias '$alias'."
+    echo "navigated to directory alias '$alias'."
     return 0
 }
 
 function home() {
     echo "navigating home..."
+    cd "$HOME" || {
+        echo "error: could not change directory to $HOME"
+        return 1
+    }
 }
 
 function edit-env() {
@@ -70,7 +74,7 @@ function edit-env() {
 }
 
 function reload() {
-    # shellcheck disable=SC1091
+    # shellcheck source=/dev/null
     . "$HOME/.bashrc" && {
         echo "reloaded $HOME/.bashrc"
     }

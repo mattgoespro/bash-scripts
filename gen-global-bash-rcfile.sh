@@ -9,6 +9,8 @@ cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=/dev/null
 source "$cwd/scripts/functions.sh"
 
+user_aliases_file_name=".user_aliases"
+
 function create-global-bashrc-file() {
     local global_bashrc_file_path="$1"
     local repo_bashrc_file_path="$2"
@@ -70,15 +72,13 @@ function add-user-aliases() {
     log "adding user-defined aliases..."
 
     local repo_aliases="$1"
-    local user_aliases_file
-    local user_aliases_file="$cwd/scripts/.user-aliases"
+    local user_aliases_file="$cwd/$user_aliases_file_name"
 
     echo "source \"$user_aliases_file\"" >>"$repo_aliases"
     log "added source of user-defined aliases to repo bash_aliases"
 }
 
 global_bashrc_file=$(cygpath "$HOME/.bashrc")
-echo "global_bashrc_file: $global_bashrc_file"
 repo_bashrc_file="$cwd/.bashrc"
 
 repo_bash_aliases_file="$cwd/.bash_aliases"
@@ -86,3 +86,4 @@ repo_bash_aliases_file="$cwd/.bash_aliases"
 create-global-bashrc-file "$global_bashrc_file" "$repo_bashrc_file"
 source-repo-bash-aliases "$global_bashrc_file" "$repo_bash_aliases_file"
 source-utility-functions "$global_bashrc_file"
+add-user-aliases "$repo_bash_aliases_file"
