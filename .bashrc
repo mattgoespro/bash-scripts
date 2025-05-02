@@ -66,7 +66,7 @@ $VOLTA_LOCAL/bin"
 #                      VOLTA APPLICATIONS                           #
 #                                                                   #
 #####################################################################
-NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/23.11.0"
+NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/22.15.0"
 
 USER_PATH="$USER_PATH:\
 $NODE_LOCAL"
@@ -117,4 +117,4 @@ fi
 export BASH_SCRIPTS="$HOME/Desktop/Code/Other/bash-scripts"
 
 # Final Path
-export PATH="$USER_PATH"
+export PATH="$PATH:$USER_PATH"
