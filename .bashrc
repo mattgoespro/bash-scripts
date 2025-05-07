@@ -70,14 +70,11 @@ NODE_VERSION="22.15.0"
 NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/$NODE_VERSION"
 
 if [[ -d "$NODE_LOCAL" ]]; then
-    echo "Node version $NODE_VERSION found: $NODE_LOCAL"
-    echo "Configuring environment for Node..."
     USER_PATH="$USER_PATH:$NODE_LOCAL"
 
     BUN="$NODE_LOCAL/node_modules/bun/bin"
 
     if [[ -d "$BUN" ]]; then
-        echo "Bun installation found: $BUN"
         USER_PATH="$USER_PATH:$BUN"
     else
         echo "Skipping environment configuration for Bun because it is not installed."
