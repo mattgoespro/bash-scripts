@@ -20,6 +20,17 @@
   "files.eol": "\n",
   "gitProjectManager.baseProjectsFolders": ["%USERPROFILE%\\Desktop\\Code"],
   "gitProjectManager.openInNewWindow": true,
+  "terminal.integrated.defaultProfile.windows": "git-bash",
+  "terminal.integrated.profiles.windows": {
+    "git-bash": {
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "args": ["-l"],
+      "icon": "terminal-bash",
+      "env": {
+        "PATH": "${env:PATH}"
+      }
+    }
+  },
   "shellcheck.logLevel": "trace",
   "workbench.colorTheme": "Material Syntax - Dark"
 }

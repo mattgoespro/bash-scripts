@@ -14,6 +14,7 @@ source "$HOME/Desktop/Code/Other/bash-scripts/.user_aliases"
 #                                                                   #
 #####################################################################
 PROGRAMFILES=$(cygpath "${PROGRAMFILES:-}")
+USERPROFILE=$(cygpath "${USERPROFILE:-}")
 
 #####################################################################
 #                                                                   #
@@ -54,8 +55,10 @@ $SCOOP/shims"
 #####################################################################
 VOLTA_LOCAL="$LOCALAPPDATA/Volta"
 PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python/Python312"
+BUN_LOCAL="$USERPROFILE/.bun/bin"
 
 USER_PATH="$USER_PATH:\
+$BUN_LOCAL:\
 $PYTHON_LOCAL:\
 $PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
@@ -66,7 +69,7 @@ $VOLTA_LOCAL/bin"
 #                      VOLTA APPLICATIONS                           #
 #                                                                   #
 #####################################################################
-NODE_VERSION="22.15.0"
+NODE_VERSION="22.15.1"
 NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/$NODE_VERSION"
 
 if [[ -d "$NODE_LOCAL" ]]; then
@@ -74,10 +77,12 @@ if [[ -d "$NODE_LOCAL" ]]; then
 
     BUN="$NODE_LOCAL/node_modules/bun/bin"
 
-    if [[ -d "$BUN" ]]; then
-        USER_PATH="$USER_PATH:$BUN"
-    else
-        echo "Skipping environment configuration for Bun because it is not installed."
+    if [[ ! -d "$BUN_LOCAL" ]]; then
+        if [[ -d "$BUN" ]]; then
+            USER_PATH="$USER_PATH:$BUN"
+        else
+            echo "Skipping environment configuration for Bun because the official installation or Node installation does not exist."
+        fi
     fi
 else
     echo "Skipping environment configuration for Node because version $NODE_VERSION is not installed/active."
