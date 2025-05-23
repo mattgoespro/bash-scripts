@@ -2,15 +2,18 @@
 
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# shellcheck disable=SC1091
+source "$cwd/scripts/functions.sh"
+
 if ! "$cwd/gen-bash-aliases-rcfile.sh"; then
-    echo "Failed to generate bash aliases rcfile, aborting."
+    echo -e "\n$(color-text "error: failed to generate bash_aliases." red)"
     exit 1
 fi
 
 if ! "$cwd/gen-global-bash-rcfile.sh"; then
-    echo "Failed to generate global bash rcfile, aborting."
+    echo -e "\n$(color-text "error: failed to generate global bashrc." red)"
     exit 1
 fi
 
-printf "\nSuccessfully generated bash aliases rcfile and global bash rcfile."
+echo -e "\n$(color-text "successfully generated global bashrc and aliases." green)"
 exit 0

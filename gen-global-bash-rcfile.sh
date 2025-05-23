@@ -1,9 +1,5 @@
 #!/bin/bash
 
-function log() {
-    echo "gen-global-bash-rcfile: $*"
-}
-
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
@@ -11,11 +7,22 @@ source "$cwd/scripts/functions.sh"
 
 user_aliases_file_name=".user_aliases"
 
+log_prefix="$(color-text "gen-global-bash-rcfile: " blue)"
+
+function log() {
+    local message="$1"
+
+    # Split the message by newline and append the prefix to each line
+    while IFS= read -r line; do
+        echo "$(color-text "$log_prefix" blue)${line}"
+    done <<<"$(echo -e "$message")"
+}
+
 function create-global-bashrc-file() {
     local global_bashrc_file_path="$1"
     local repo_bashrc_file_path="$2"
 
-    read -r -p "$(log "a bashrc file already exists at '$global_bashrc_file_path'. Type 'confirm' to overwrite it:") " response
+    read -r -p "$log_prefix$(color-text "a global bashrc already exists, type '$(color-text "confirm" yellow)$(color-text "' to overwrite it: " grey)" grey)" response
 
     if [[ "$response" != "confirm" ]]; then
         log "aborting."
@@ -25,23 +32,20 @@ function create-global-bashrc-file() {
     global_bashrc_backup_file_path="$HOME/.bashrc.bak"
 
     if [[ -f "$global_bashrc_backup_file_path" ]]; then
+        log "$(color-text "removing existing backup of bashrc: $global_bashrc_backup_file_path" yellow)"
         rm -f "$global_bashrc_backup_file_path"
-        log "removed existing backup of bashrc file"
     fi
 
     cat "$global_bashrc_file_path" >"$global_bashrc_backup_file_path"
-    log "created backup of bashrc file: $global_bashrc_backup_file_path"
 
     rm -f "$global_bashrc_file_path"
-    log "removed existing bashrc file"
 
-    log "initializing, creating bashrc file..."
+    log "$(color-text "creating global bashrc..." green)"
     touch "$global_bashrc_file_path"
 
     # source this bashrc file
     {
         echo "#!/bin/bash" >>"$global_bashrc_file_path"
-
         echo "# shellcheck source=/dev/null"
         echo ". \"$repo_bashrc_file_path\""
     } >>"$global_bashrc_file_path"
@@ -51,31 +55,26 @@ function source-repo-bash-aliases() {
     local global_aliases_file_path="$1"
     local repo_aliases_file_path="$2"
 
-    log "sourcing bash aliases..."
-
+    log "$(color-text "sourcing repo bash_aliases in global bashrc..." green)"
     echo "source \"$repo_aliases_file_path\"" >>"$global_aliases_file_path"
-    log "added source of repo bash_aliases to global bashrc"
+
 }
 
 function source-utility-functions() {
     local global_bashrc_file_path="$1"
-
-    log "sourcing functions..."
-
     local repo_functions="$cwd/scripts/functions.sh"
 
+    log "$(color-text "sourcing utility functions in global bashrc..." green)"
     echo "source \"$repo_functions\"" >>"$global_bashrc_file_path"
-    log "added source of repo functions to global bashrc"
+
 }
 
 function add-user-aliases() {
-    log "adding user-defined aliases..."
-
     local repo_aliases="$1"
     local user_aliases_file="$cwd/$user_aliases_file_name"
 
+    log "$(color-text "sourcing user aliases in repo bash_aliases..." green)"
     echo "source \"$user_aliases_file\"" >>"$repo_aliases"
-    log "added source of user-defined aliases to repo bash_aliases"
 }
 
 global_bashrc_file=$(cygpath "$HOME/.bashrc")

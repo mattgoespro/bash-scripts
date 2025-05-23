@@ -2,41 +2,10 @@
 
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# shellcheck disable=SC1091
+source "$cwd/scripts/functions.sh"
+
 user_aliases_file_name=".user_aliases"
-
-function color() {
-    if [[ "$#" -ne 2 ]]; then
-        echo "Usage: color <color> <message>"
-        return 1
-    fi
-
-    message="$1"
-    color="$2"
-
-    case "$2" in
-    green)
-        echo -e "\033[0;32m$message\033[0m"
-        ;;
-    dark-grey)
-        echo -e "\033[0;90m$message\033[0m"
-        ;;
-    red)
-        echo -e "\033[0;31m$message\033[0m"
-        ;;
-    yellow)
-        echo -e "\033[0;33m$message\033[0m"
-        ;;
-    blue)
-        echo -e "\033[0;34m$message\033[0m"
-        ;;
-    *)
-        echo "Unknown color: $color"
-        exit 1
-        ;;
-    esac
-
-    return 0
-}
 
 function log() {
     local prefix="gen-bash-aliases-rcfile: "
@@ -44,7 +13,7 @@ function log() {
 
     # Split the message by newline and append the prefix to each line
     while IFS= read -r line; do
-        echo "$(color "$prefix" blue)${line}"
+        echo "$(color-text "$prefix" blue)${line}"
     done <<<"$(echo -e "$message")"
 }
 
@@ -103,16 +72,16 @@ function add-script-user-alias() {
 
     if ! generated-alias-exists "$generated_aliases_rcfile" "$script_short_file_name"; then
         echo "$alias_definition" >>"$generated_aliases_rcfile"
-        log "added '$(color "$filename" dark-grey)' short alias: '$(color "$script_short_file_name" yellow)' -> '$(color "$script_file_name'" green)"
+        log "added '$(color-text "$filename" grey)' short alias: '$(color-text "$script_short_file_name" yellow)' -> '$(color-text "$script_file_name'" green)"
     else
-        log "$(color "alias already exists: '$script_short_file_name'" yellow)"
+        log "$(color-text "alias already exists: '$script_short_file_name'" yellow)"
     fi
 }
 
 function add-script-aliases() {
     local generated_aliases_rcfile="$1"
 
-    log "$(color "generating script aliases..." blue)"
+    log "$(color-text "generating script aliases..." blue)"
 
     while IFS= read -r -d '' script_file_path; do
         local filename
@@ -121,9 +90,9 @@ function add-script-aliases() {
 
         if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
             echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "$(color "added alias" "dark-grey"): '$(color "$filename" yellow)' -> '$(color "$script_file_path'" green)"
+            log "$(color-text "added alias" "grey"): '$(color-text "$filename" yellow)' -> '$(color-text "$script_file_path'" green)"
         else
-            log "$(color "alias already exists: '$filename'" dark-grey)"
+            log "$(color-text "alias already exists: '$filename'" grey)"
         fi
 
         if script-has-user-alias "$filename"; then
@@ -139,11 +108,11 @@ function add-js-scripts-executable-aliases() {
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
-        log "$(color "[error] js-scripts executables in directory '$js_scripts_executables_dir' haven't been compiled, skipping." red) "
+        log "$(color-text "[error] js-scripts executables in directory '$js_scripts_executables_dir' haven't been compiled, skipping." red) "
         return 1
     fi
 
-    log "$(color "generating aliases for js-scripts executables in directory '$js_scripts_executables_dir'" blue)"
+    log "$(color-text "generating aliases for js-scripts executables in directory '$js_scripts_executables_dir'" blue)"
 
     while IFS= read -r -d '' executable_file_path; do
         local filename
@@ -152,9 +121,9 @@ function add-js-scripts-executable-aliases() {
 
         if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
             echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "$(color "added js-scripts executable alias" "dark-grey"): '$(color "$filename" yellow)' -> '$(color "$executable_file_path'" green)"
+            log "$(color-text "added js-scripts executable alias" "grey"): '$(color-text "$filename" yellow)' -> '$(color-text "$executable_file_path'" green)"
         else
-            log "$(color "js-scripts executable alias already exists: '$filename'" dark-grey)"
+            log "$(color-text "js-scripts executable alias already exists: '$filename'" grey)"
         fi
     done < <(find "$js_scripts_executables_dir" -maxdepth 1 -name "*.exe" -type f -print0)
 }
@@ -162,30 +131,30 @@ function add-js-scripts-executable-aliases() {
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
-    log "$(color "generating repo bash aliases rcfile..." dark-grey)"
+    log "$(color-text "generating repo bash aliases rcfile..." grey)"
     sleep 0.5
 
     if [[ -f "$repo_bash_aliases_file" ]]; then
         rm -f "$repo_bash_aliases_file"
-        log "$(color "removed existing repo bash aliases rcfile: $repo_bash_aliases_file" dark-grey)"
+        log "$(color-text "removed existing repo bash aliases rcfile: $repo_bash_aliases_file" grey)"
     fi
 
     echo "#!/bin/bash" >"$repo_bash_aliases_file"
-    log "$(color "created repo bash aliases rcfile: $repo_bash_aliases_file" dark-grey)"
+    log "$(color-text "created repo bash aliases rcfile: $repo_bash_aliases_file" grey)"
     sleep 0.5
 
     add-script-aliases "$repo_bash_aliases_file"
-    log "\n$(color "successfully added script aliases!" green)"
+    log "\n$(color-text "successfully added script aliases!" green)"
     sleep 0.5
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
-    log "\n$(color "successfully added js-scripts executable aliases!" green)"
+    log "\n$(color-text "successfully added js-scripts executable aliases!" green)"
     sleep 0.5
 
-    log "\n$(color "successfully added user aliases!" green)"
+    log "\n$(color-text "successfully added user aliases!" green)"
 }
 
 generate-repo-bash-aliases-rcfile || {
-    log "$(color "error: failed to generate repo bash aliases rcfile" red)"
+    log "$(color-text "error: failed to generate repo bash aliases rcfile" red)"
     exit 1
 }

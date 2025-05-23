@@ -1,33 +1,25 @@
 #!/bin/bash
 
+desktop_dir="$HOME/Desktop"
+code_dir="$desktop_dir/Code"
+
 function goto-desktop() {
-    cd "$HOME/Desktop" || echo "error: could not change directory to $HOME/Desktop"
+    cd "$desktop_dir" || echo "error: failed to change directory to '$desktop_dir'"
 }
 
 function goto-code() {
-    cd "$HOME/Desktop/Code" || echo "error: could not change directory to $HOME/Desktop/Code"
+    cd "$code_dir" || echo "error: failed to change directory to '$code_dir'"
 }
 
 function goto-js-scripts() {
-    cd "$HOME/Desktop/Code/Node/js-scripts" || echo "error: could not change directory to $HOME/Desktop/Code/Node/js-scripts"
+    cd "$code_dir/Node/js-scripts" || echo "error: failed to change directory to '$code_dir/Node/js-scripts'"
+}
+
+function goto-bash-scripts() {
+    cd "$code_dir/Node/js-scripts" || echo "error: failed to change directory to '$code_dir/Node/js-scripts'"
 }
 
 function goto() {
-    function usage() {
-        echo "Usage: goto <directory-alias>"
-        echo "Available directory aliases:"
-        echo "  desktop"
-        echo "  code"
-        echo "  js-scripts"
-        echo "  bash-scripts"
-        echo "  icons"
-    }
-
-    if [[ $# -eq 0 ]]; then
-        usage
-        return 1
-    fi
-
     dirmap=(
         [desktop]="$HOME/Desktop"
         [code]="$HOME/Desktop/Code"
@@ -35,6 +27,19 @@ function goto() {
         ["bash-scripts"]="$HOME/Desktop/Code/Node/bash-scripts"
         [icons]="$LOCALAPPDATA/Icons"
     )
+
+    function usage() {
+        echo "Usage: goto <directory-alias>"
+        echo "Available directory aliases:"
+        for alias in "${!dirmap[@]}"; do
+            echo "  $alias -> ${dirmap[$alias]}"
+        done
+    }
+
+    if [[ $# -eq 0 ]]; then
+        usage
+        return 1
+    fi
 
     alias="$1"
     target_dir="${dirmap[$alias]}"
@@ -153,4 +158,38 @@ function find-dir() {
     fi
 
     find "$search_dir" -type d -name "$dir_name"
+}
+
+function color-text() {
+    if [[ "$#" -ne 2 ]]; then
+        echo "Usage: color-text <color> <message>"
+        return 1
+    fi
+
+    message="$1"
+    color="$2"
+
+    case "$2" in
+    green)
+        echo -e "\033[0;32m$message\033[0m"
+        ;;
+    grey)
+        echo -e "\033[0;90m$message\033[0m"
+        ;;
+    red)
+        echo -e "\033[0;31m$message\033[0m"
+        ;;
+    yellow)
+        echo -e "\033[0;33m$message\033[0m"
+        ;;
+    blue)
+        echo -e "\033[0;34m$message\033[0m"
+        ;;
+    *)
+        echo "Unknown color: $color"
+        exit 1
+        ;;
+    esac
+
+    return 0
 }
