@@ -66,16 +66,19 @@ $VOLTA_LOCAL/bin"
 #                      VOLTA APPLICATIONS                           #
 #                                                                   #
 #####################################################################
-NODE_VERSION="22.15.0"
+NODE_VERSION="22.16.0"
 NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/$NODE_VERSION"
 
 if [[ -d "$NODE_LOCAL" ]]; then
     USER_PATH="$USER_PATH:$NODE_LOCAL"
 
-    BUN="$NODE_LOCAL/node_modules/bun/bin"
+    BUN_LOCAL="$HOME/.bun/bin"
+    BUN_NODE="$NODE_LOCAL/node_modules/bun"
 
-    if [[ -d "$BUN" ]]; then
-        USER_PATH="$USER_PATH:$BUN"
+    if [[ -d "$BUN_LOCAL" ]]; then
+        USER_PATH="$USER_PATH:$BUN_LOCAL/bin"
+    elif [[ -d "$BUN_NODE" ]]; then
+        USER_PATH="$USER_PATH:$BUN_NODE/bin"
     else
         echo "Skipping environment configuration for Bun because it is not installed."
     fi
