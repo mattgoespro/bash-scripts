@@ -193,3 +193,31 @@ function color-text() {
 
     return 0
 }
+
+function get-last-url-segment() {
+    local url="$1"
+    # Strip query parameters and fragments
+    url="${url%%[\?#]*}"
+    # Strip trailing slash if any
+    url="${url%/}"
+    # Extract last segment after the final slash
+    echo "${url##*/}"
+}
+
+
+function lux-video-download() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: lux-video-download <video-url> [output-file-name]"
+        return 1
+    fi
+
+    local video_url="$1"
+    local output_file_name="$2"
+
+    if [[ -z "$output_file_name" ]]; then
+        output_file_name=$(get-last-url-segment "$video_url")
+    fi
+
+    echo "Downloading video from $video_url to $output_file_name..."
+    # Add your download command here
+}

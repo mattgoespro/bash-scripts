@@ -66,25 +66,25 @@ $VOLTA_LOCAL/bin"
 #                      VOLTA APPLICATIONS                           #
 #                                                                   #
 #####################################################################
-NODE_VERSION="22.16.0"
-NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/$NODE_VERSION"
+# NODE_VERSION="22.16.0"
+# NODE_LOCAL="$VOLTA_LOCAL/tools/image/node/$NODE_VERSION"
 
-if [[ -d "$NODE_LOCAL" ]]; then
-    USER_PATH="$USER_PATH:$NODE_LOCAL"
+# if [[ -d "$NODE_LOCAL" ]]; then
+#     USER_PATH="$USER_PATH:$NODE_LOCAL"
 
-    BUN_LOCAL="$HOME/.bun/bin"
-    BUN_NODE="$NODE_LOCAL/node_modules/bun"
+#     BUN_LOCAL="$HOME/.bun/bin"
+#     BUN_NODE="$NODE_LOCAL/node_modules/bun"
 
-    if [[ -d "$BUN_LOCAL" ]]; then
-        USER_PATH="$USER_PATH:$BUN_LOCAL/bin"
-    elif [[ -d "$BUN_NODE" ]]; then
-        USER_PATH="$USER_PATH:$BUN_NODE/bin"
-    else
-        echo "Skipping environment configuration for Bun because it is not installed."
-    fi
-else
-    echo "Skipping environment configuration for Node because version $NODE_VERSION is not installed/active."
-fi
+#     if [[ -d "$BUN_LOCAL" ]]; then
+#         USER_PATH="$USER_PATH:$BUN_LOCAL/bin"
+#     elif [[ -d "$BUN_NODE" ]]; then
+#         USER_PATH="$USER_PATH:$BUN_NODE/bin"
+#     else
+#         echo "Skipping environment configuration for Bun because it is not installed."
+#     fi
+# else
+#     echo "Skipping environment configuration for Node because version $NODE_VERSION is not installed/active."
+# fi
 
 #####################################################################
 #                                                                   #
@@ -94,8 +94,6 @@ fi
 ANDROID_SDK_HOME="$LOCALAPPDATA/Android/Sdk"
 
 if [[ -d "$ANDROID_SDK_HOME" ]]; then
-    echo "Android SDK found at $ANDROID_SDK_HOME"
-    echo "Configuring environment for Android SDK..."
     ANDROID_SDK_CLI_TOOLS="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
     ANDROID_SDK_PLATFORM_TOOLS="$ANDROID_SDK_HOME/platform-tools"
     ANDROID_SDK_EMULATOR="$ANDROID_SDK_HOME/emulator"
@@ -111,25 +109,27 @@ fi
 #                    APPLICATION CONFIGURATION                      #
 #                                                                   #
 #####################################################################
-JAVA_HOME="$HOME/.jdks/corretto-20.0.2.1"
+# JAVA_HOME="$HOME/scoop/apps/openjdk/current"
 
-if [[ -d "$JAVA_HOME" ]]; then
-    echo "Java found at $JAVA_HOME"
-    echo "Configuring environment for Java..."
+# if [[ -d "$JAVA_HOME" ]]; then
+#     echo "Java found at $JAVA_HOME"
+#     echo "Configuring environment for Java..."
 
-    export JAVA_HOME
+#     export JAVA_HOME
 
-    USER_PATH="$USER_PATH:\
-        $JAVA_HOME/bin:\
-        $LOCALAPPDATA/flutter/bin"
-fi
+#     USER_PATH="$USER_PATH:\
+#         $JAVA_HOME/bin:\
+#         $LOCALAPPDATA/flutter/bin"
+# fi
 
 #####################################################################
 #                                                                   #
-#                     REPORITORY DIRECTORIES                        #
+#                     REPOSITORY DIRECTORIES                        #
 #                                                                   #
 #####################################################################
 export BASH_SCRIPTS="$HOME/Desktop/Code/Other/bash-scripts"
+export JS_SCRIPTS="$HOME/Desktop/Code/Node/js-scripts"
+export NODE_REPOS="$HOME/Desktop/Code/Node"
 
 # Final Path
 export PATH="$PATH:$USER_PATH"

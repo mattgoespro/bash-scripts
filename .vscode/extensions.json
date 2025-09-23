@@ -2,8 +2,6 @@
   "recommendations": [
     "github.copilot",
     "github.copilot-chat",
-    "shakram02.bash-beautify",
-    "rogalmic.bash-debug",
     "usernamehw.errorlens",
     "jeff-hykin.better-shellscript-syntax",
     "timonwong.shellcheck",
@@ -13,6 +11,7 @@
     "foxundermoon.shell-format",
     "woodywoodsta.vscode-material-syntax-dark",
     "mads-hartmann.bash-ide-vscode",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "peaceshi.syntax-highlight"
   ]
 }
