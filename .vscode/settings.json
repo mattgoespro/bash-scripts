@@ -20,5 +20,5 @@
   "files.eol": "\n",
   "shellcheck.logLevel": "trace",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "workbench.colorTheme": "Syntax Material Dark Level 1 (beta)"
+  "workbench.colorTheme": "Syntax Material Dark"
 }

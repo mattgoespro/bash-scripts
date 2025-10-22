@@ -1,7 +1,13 @@
 # shellcheck disable=SC2148
-LOCALAPPDATA="$(cygpath "${LOCALAPPDATA:-}")"
+LOCALAPPDATA="$(cygpath "${LOCALAPPDATA:?}")"
 
 alias meditation-picker="\$HOME/Desktop/Code/Node/js-scripts/dist/meditation-picker.exe"
 alias env="env | sort"
-alias sdkmanager="\$LOCALAPPDATA/Android/Sdk/cmdline-tools/latest/bin/sdkmanager.bat"
-alias avdmanager="\$LOCALAPPDATA/Android/Sdk/cmdline-tools/latest/bin/avdmanager.bat"
+
+if command -v sdkmanager.bat >/dev/null 2>&1; then
+    alias sdkmanager="\"\$(command -v sdkmanager.bat)\""
+fi
+
+if command -v avdmanager.bat >/dev/null 2>&1; then
+    alias avdmanager="\$(command -v avdmanager.bat)"
+fi

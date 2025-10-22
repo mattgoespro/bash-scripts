@@ -109,7 +109,7 @@ function update-else-append-file() {
 }
 
 function chrome-debug() {
-    "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222
+    "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222 --user-data-dir="$LOCALAPPDATA/Google/Chrome/User Data/Default"
 }
 
 function find-file() {

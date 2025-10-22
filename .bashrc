@@ -54,8 +54,11 @@ $SCOOP/shims"
 #####################################################################
 VOLTA_LOCAL="$LOCALAPPDATA/Volta"
 PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python/Python312"
+ANDROID_SDK_STANDALONE="$LOCALAPPDATA/Programs/Android SDK"
 
 USER_PATH="$USER_PATH:\
+$ANDROID_SDK_STANDALONE/cmdline-tools/bin:\
+$ANDROID_SDK_STANDALONE/platform-tools:\
 $PYTHON_LOCAL:\
 $PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
