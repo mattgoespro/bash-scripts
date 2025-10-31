@@ -16,56 +16,12 @@ function goto-js-scripts() {
 }
 
 function goto-bash-scripts() {
-    cd "$code_dir/Node/js-scripts" || echo "error: failed to change directory to '$code_dir/Node/js-scripts'"
-}
-
-function goto() {
-    dirmap=(
-        [desktop]="$HOME/Desktop"
-        [code]="$HOME/Desktop/Code"
-        ["js-scripts"]="$HOME/Desktop/Code/Node/js-scripts"
-        ["bash-scripts"]="$HOME/Desktop/Code/Node/bash-scripts"
-        [icons]="$LOCALAPPDATA/Icons"
-    )
-
-    function usage() {
-        echo "Usage: goto <directory-alias>"
-        echo "Available directory aliases:"
-        for alias in "${!dirmap[@]}"; do
-            echo "  $alias -> ${dirmap[$alias]}"
-        done
-    }
-
-    if [[ $# -eq 0 ]]; then
-        usage
-        return 1
-    fi
-
-    alias="$1"
-    target_dir="${dirmap[$alias]}"
-
-    if [[ -z "$target_dir" ]]; then
-        echo "Error: Unknown directory alias '$alias'."
-        usage
-        exit 1
-    fi
-
-    if [[ ! -d "$target_dir" ]]; then
-        echo "error: alias '$alias' target directory '$target_dir' does not yet exist."
-        exit 1
-    fi
-
-    cd "$target_dir" || {
-        echo "error: could not change directory to '$target_dir'."
-        exit 1
-    }
-
-    echo "navigated to directory alias '$alias'."
-    return 0
+    cd "$code_dir/Other/bash-scripts" || echo "error: failed to change directory to '$code_dir/Other/bash-scripts'"
 }
 
 function home() {
     echo "navigating home..."
+
     cd "$HOME" || {
         echo "error: could not change directory to $HOME"
         return 1
@@ -73,9 +29,14 @@ function home() {
 }
 
 function edit-env() {
-    # shellcheck disable=SC2154
-    # open the .bashrc file at the project's root
-    code "$BASH_SCRIPTS/.bashrc"
+    bash_scripts_dir="/c/Users/Matt/Desktop/Code/Other/bash-scripts"
+
+    if [[ ! -d "$bash_scripts_dir" ]]; then
+        echo "[vscode-open-bash-scripts] error: bash scripts directory does not exist: $bash_scripts_dir"
+        return 1
+    fi
+
+    code "$bash_scripts_dir" --goto .bashrc
 }
 
 function reload() {
@@ -109,7 +70,7 @@ function update-else-append-file() {
 }
 
 function chrome-debug() {
-    "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222 --user-data-dir="$LOCALAPPDATA/Google/Chrome/User Data/Default"
+    "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222 --user-data-dir="${LOCALAPPDATA:?}/Google/Chrome/User Data/Default"
 }
 
 function find-file() {
@@ -202,22 +163,4 @@ function get-last-url-segment() {
     url="${url%/}"
     # Extract last segment after the final slash
     echo "${url##*/}"
-}
-
-
-function lux-video-download() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: lux-video-download <video-url> [output-file-name]"
-        return 1
-    fi
-
-    local video_url="$1"
-    local output_file_name="$2"
-
-    if [[ -z "$output_file_name" ]]; then
-        output_file_name=$(get-last-url-segment "$video_url")
-    fi
-
-    echo "Downloading video from $video_url to $output_file_name..."
-    # Add your download command here
 }
