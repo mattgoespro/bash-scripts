@@ -8,7 +8,7 @@ source "$cwd/scripts/functions.sh"
 user_aliases_file_name=".user_aliases"
 
 function log() {
-    local prefix="gen-bash-aliases-rcfile: "
+    local prefix="add-utilities: "
     local message="$1"
 
     # Split the message by newline and append the prefix to each line
@@ -44,6 +44,7 @@ function generated-alias-exists() {
     local generated_aliases_rcfile="$1"
     local alias_definition="$2"
 
+    grep "$alias_definition" "$generated_aliases_rcfile"
     if grep -q "$alias_definition" "$generated_aliases_rcfile"; then
         return 0
     fi
@@ -70,12 +71,8 @@ function add-script-user-alias() {
     local alias_definition
     alias_definition="alias $script_short_file_name=\"$script_file_name\""
 
-    if ! generated-alias-exists "$generated_aliases_rcfile" "$script_short_file_name"; then
-        echo "$alias_definition" >>"$generated_aliases_rcfile"
-        log "added '$(color-text "$filename" grey)' short alias: '$(color-text "$script_short_file_name" yellow)' -> '$(color-text "$script_file_name'" green)"
-    else
-        log "$(color-text "alias already exists: '$script_short_file_name'" yellow)"
-    fi
+    echo "$alias_definition" >>"$generated_aliases_rcfile"
+    log "added '$(color-text "$filename" grey)' short alias: '$(color-text "$script_short_file_name" yellow)' -> '$(color-text "$script_file_name'" green)"
 }
 
 function add-script-aliases() {
@@ -88,12 +85,8 @@ function add-script-aliases() {
         filename="$(basename "$script_file_path" .sh)"
         local alias_definition="alias $filename=\"$script_file_path\""
 
-        if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
-            echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "$(color-text "added alias" "grey"): '$(color-text "$filename" yellow)' -> '$(color-text "$script_file_path'" green)"
-        else
-            log "$(color-text "alias already exists: '$filename'" grey)"
-        fi
+        echo "$alias_definition" >>"$generated_aliases_rcfile"
+        log "$(color-text "added alias" "grey"): $(color-text "$filename" cyan) -> '$(color-text "$script_file_path'" green)"
 
         if script-has-user-alias "$filename"; then
             add-script-user-alias "$filename" "$generated_aliases_rcfile"
@@ -119,17 +112,18 @@ function add-js-scripts-executable-aliases() {
         filename="$(basename "$executable_file_path" "$js_scripts_executables_ext")"
         local alias_definition="alias $filename=\"$executable_file_path\""
 
-        if ! generated-alias-exists "$generated_aliases_rcfile" "$filename"; then
-            echo "$alias_definition" >>"$generated_aliases_rcfile"
-            log "$(color-text "added js-scripts executable alias" "grey"): '$(color-text "$filename" yellow)' -> '$(color-text "$executable_file_path'" green)"
-        else
-            log "$(color-text "js-scripts executable alias already exists: '$filename'" grey)"
-        fi
+        echo "$alias_definition" >>"$generated_aliases_rcfile"
+        log "$(color-text "added js-scripts executable alias: " "grey")$(color-text "$filename" magenta) -> '$(color-text "$executable_file_path'" green)"
     done < <(find "$js_scripts_executables_dir" -maxdepth 1 -name "*.exe" -type f -print0)
 }
 
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
+
+    if [[ -f "$repo_bash_aliases_file" ]]; then
+        rm -f "$repo_bash_aliases_file"
+        log "$(color-text "removed existing repo bash aliases rcfile: $repo_bash_aliases_file" grey)"
+    fi
 
     log "$(color-text "generating repo bash aliases rcfile..." grey)"
     sleep 0.5
@@ -145,13 +139,12 @@ function generate-repo-bash-aliases-rcfile() {
 
     add-script-aliases "$repo_bash_aliases_file"
     log "\n$(color-text "successfully added script aliases!" green)"
-    sleep 0.5
+    log ""
+    sleep 1
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
     log "\n$(color-text "successfully added js-scripts executable aliases!" green)"
-    sleep 0.5
-
-    log "\n$(color-text "successfully added user aliases!" green)"
+    log ""
 }
 
 generate-repo-bash-aliases-rcfile || {

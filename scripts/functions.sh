@@ -146,6 +146,12 @@ function color-text() {
     blue)
         echo -e "\033[0;34m$message\033[0m"
         ;;
+    cyan)
+        echo -e "\033[0;36m$message\033[0m"
+        ;;
+    magenta)
+        echo -e "\033[0;35m$message\033[0m"
+        ;;
     *)
         echo "Unknown color: $color"
         exit 1

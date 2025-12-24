@@ -3,9 +3,10 @@
 function goto() {
     dirmap=(
         ["desktop"]="$HOME/Desktop"
-        ["code"]="$HOME/Desktop/Code"
-        ["js-scripts"]="$HOME/Desktop/Code/Node/js-scripts"
-        ["bash-scripts"]="$HOME/Desktop/Code/Node/bash-scripts"
+        ["code"]="${dirmap[desktop]}/Code"
+        ["node"]="${dirmap[code]}/Node"
+        ["js-scripts"]="${dirmap[node]}/js-scripts"
+        ["bash-scripts"]="${dirmap[node]}/bash-scripts"
         ["icons"]="${LOCALAPPDATA:?}/Icons"
     )
 
