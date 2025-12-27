@@ -117,6 +117,17 @@ function add-js-scripts-executable-aliases() {
     done < <(find "$js_scripts_executables_dir" -maxdepth 1 -name "*.exe" -type f -print0)
 }
 
+function add-bash-completions() {
+    local generated_aliases_rcfile="$1"
+    local bash_completions_dir
+    bash_completions_dir="$cwd/scripts/completions"
+
+    while IFS= read -r -d '' completions_file_path; do
+        echo "source \"$completions_file_path\"" >>"$generated_aliases_rcfile"
+        log "$(color-text "added bash completions: " "grey")$(color-text "$completions_file_path" pink)"
+    done < <(find "$bash_completions_dir" -maxdepth 1 -name "*.completions.sh" -type f -print0)
+}
+
 function generate-repo-bash-aliases-rcfile() {
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
@@ -144,6 +155,10 @@ function generate-repo-bash-aliases-rcfile() {
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
     log "\n$(color-text "successfully added js-scripts executable aliases!" green)"
+    log ""
+
+    add-bash-completions "$repo_bash_aliases_file"
+    log "\n$(color-text "successfully added script completions!" green)"
     log ""
 }
 

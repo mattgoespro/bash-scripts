@@ -1,22 +1,48 @@
 #!/bin/bash
 
-desktop_dir="$HOME/Desktop"
-code_dir="$desktop_dir/Code"
+function goto() {
+    dirmap=(
+        ["desktop"]="$HOME/Desktop"
+        ["code"]="${dirmap[desktop]}/Code"
+        ["node"]="${dirmap[code]}/Node"
+        ["js-scripts"]="${dirmap[node]}/js-scripts"
+        ["bash-scripts"]="${dirmap[node]}/bash-scripts"
+    )
 
-function goto-desktop() {
-    cd "$desktop_dir" || echo "error: failed to change directory to '$desktop_dir'"
-}
+    function usage() {
+        echo "Usage: goto <directory-alias>"
+        echo "Available directory aliases:"
+        for alias in "${!dirmap[@]}"; do
+            echo "  $alias -> ${dirmap[$alias]}"
+        done
+    }
 
-function goto-code() {
-    cd "$code_dir" || echo "error: failed to change directory to '$code_dir'"
-}
+    if [[ $# -eq 0 ]]; then
+        usage
+        return 1
+    fi
 
-function goto-js-scripts() {
-    cd "$code_dir/Node/js-scripts" || echo "error: failed to change directory to '$code_dir/Node/js-scripts'"
-}
+    alias="$1"
+    target_dir="${dirmap[$alias]}"
 
-function goto-bash-scripts() {
-    cd "$code_dir/Other/bash-scripts" || echo "error: failed to change directory to '$code_dir/Other/bash-scripts'"
+    if [[ -z "$target_dir" ]]; then
+        echo "Error: Unknown directory alias '$alias'."
+        usage
+        return 1
+    fi
+
+    if [[ ! -d "$target_dir" ]]; then
+        echo "error: alias '$alias' target directory '$target_dir' does not yet exist."
+        return 1
+    fi
+
+    cd "$target_dir" || {
+        echo "error: could not change directory to '$target_dir'."
+        return 1
+    }
+
+    echo "navigated to directory alias '$alias'."
+    return 0
 }
 
 function home() {
@@ -68,10 +94,6 @@ function update-else-append-file() {
 
     return 0
 }
-
-# function chrome-debug() {
-#     "/c/Program Files/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222 --user-data-dir="${LOCALAPPDATA:?}/Google/Chrome/User Data/RemoteDebuggingProfile" &
-# }
 
 function find-file() {
     local file_name="$1"
@@ -151,6 +173,9 @@ function color-text() {
         ;;
     magenta)
         echo -e "\033[0;35m$message\033[0m"
+        ;;
+    pink)
+        echo -e "\033[0;95m$message\033[0m"
         ;;
     *)
         echo "Unknown color: $color"
