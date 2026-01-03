@@ -188,10 +188,7 @@ function color-text() {
 
 function get-last-url-segment() {
     local url="$1"
-    # Strip query parameters and fragments
-    url="${url%%[\?#]*}"
-    # Strip trailing slash if any
-    url="${url%/}"
-    # Extract last segment after the final slash
-    echo "${url##*/}"
+    url="${url%%[\?#]*}" # Strip query parameters and fragments
+    url="${url%/}"       # Strip trailing slash (if any)
+    echo "${url##*/}"    # Get the last segment after the final slash
 }

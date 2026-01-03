@@ -11,7 +11,7 @@ if ! command -v lux; then
 fi
 
 if [[ -z "$1" ]]; then
-    echo "Usage: lux-video-download <video-url> [output-file-name]"
+    echo "Usage: luxvdl <video-url> [output-file-name]"
     exit 1 >>/dev/null
 fi
 
@@ -22,13 +22,17 @@ if [[ -z "$output_file_name" ]]; then
     output_file_name=$(get-last-url-segment "$video_url")
 fi
 
-echo "Downloading video: to $output_file_name..."
-echo -e "\tURL: $video_url"echo -e "\tFilename: $output_file_name"
+output_file_destination="$(cygpath -w "$HOME/Downloads/$output_file_name")"
 
-if ! lux -m -O "$HOME/Downloads/$output_file_name" "$video_url"; then
-    color-text red "error: failed to download video from $video_url"
+echo "Downloading video with file name '$output_file_name'..."
+echo -e "\tURL: $video_url"
+echo -e "\tFilename: $output_file_name"
+echo -e "\tDestination: $output_file_destination"
+
+if ! lux -m -O "$output_file_destination" "$video_url"; then
+    "$(color-text "error: failed to download video from $video_url" red)"
     exit 1 >>/dev/null
 fi
 
-color-text green "success: video downloaded to $HOME/Downloads/$output_file_name"
+"$(color-text "success: video downloaded -> $output_file_destination" green)"
 exit 0 >>/dev/null
