@@ -10,7 +10,7 @@ if ! "$cwd/add-utilities.sh"; then
     exit 1
 fi
 
-if ! "$cwd/gen-global-bash-rcfile.sh"; then
+if ! "$cwd/add-rcfile.sh"; then
     echo -e "\n$(color-text "error: failed to generate global bashrc." red)"
     exit 1
 fi
