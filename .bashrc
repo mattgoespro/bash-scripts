@@ -13,7 +13,8 @@ source "$HOME/Desktop/Code/Other/bash-scripts/.user_aliases"
 #                       SYSTEM DIRECTORIES                          #
 #                                                                   #
 #####################################################################
-PROGRAMFILES=$(cygpath "${PROGRAMFILES:-}")
+PROGRAMFILES=/c/Program\ Files
+export PROGRAMFILES
 
 #####################################################################
 #                                                                   #
@@ -22,12 +23,14 @@ PROGRAMFILES=$(cygpath "${PROGRAMFILES:-}")
 #####################################################################
 GIT="$PROGRAMFILES/Git"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
+VOLTA="$PROGRAMFILES/Volta"
 
 USER_PATH="$GIT/bin:\
 $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
-$SUBLIME_TEXT"
+$SUBLIME_TEXT:\
+$VOLTA"
 
 #####################################################################
 #                                                                   #

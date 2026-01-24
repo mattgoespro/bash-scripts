@@ -22,23 +22,9 @@ function create-global-bashrc-file() {
     local global_bashrc_file_path="$1"
     local repo_bashrc_file_path="$2"
 
-    read -r -p "$log_prefix$(color-text "a global bashrc already exists, type '$(color-text "confirm" yellow)$(color-text "' to overwrite it: " grey)" grey)" response
-
-    if [[ "$response" != "confirm" ]]; then
-        log "aborting."
-        exit 1
+    if [[ -f "$global_bashrc_file_path" ]]; then
+        rm -f "$global_bashrc_file_path"
     fi
-
-    global_bashrc_backup_file_path="$HOME/.bashrc.bak"
-
-    if [[ -f "$global_bashrc_backup_file_path" ]]; then
-        log "$(color-text "removing existing backup of bashrc: $global_bashrc_backup_file_path" yellow)"
-        rm -f "$global_bashrc_backup_file_path"
-    fi
-
-    cat "$global_bashrc_file_path" >"$global_bashrc_backup_file_path"
-
-    rm -f "$global_bashrc_file_path"
 
     log "$(color-text "creating global bashrc..." green)"
     touch "$global_bashrc_file_path"

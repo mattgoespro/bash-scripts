@@ -137,7 +137,6 @@ function generate-repo-bash-aliases-rcfile() {
     fi
 
     log "$(color-text "generating repo bash aliases rcfile..." grey)"
-    sleep 0.5
 
     if [[ -f "$repo_bash_aliases_file" ]]; then
         rm -f "$repo_bash_aliases_file"
@@ -146,12 +145,10 @@ function generate-repo-bash-aliases-rcfile() {
 
     echo "#!/bin/bash" >"$repo_bash_aliases_file"
     log "$(color-text "created repo bash aliases rcfile: $repo_bash_aliases_file" grey)"
-    sleep 0.5
 
     add-script-aliases "$repo_bash_aliases_file"
     log "\n$(color-text "successfully added script aliases!" green)"
     log ""
-    sleep 1
 
     add-js-scripts-executable-aliases "$repo_bash_aliases_file"
     log "\n$(color-text "successfully added js-scripts executable aliases!" green)"

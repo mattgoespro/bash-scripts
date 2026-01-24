@@ -1,11 +1,11 @@
 {
   "[shellcheckrc]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
@@ -18,8 +18,8 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "shellcheck.logLevel": "trace",
   "shellcheck.customArgs": ["--external-sources", "scripts"],
+  "shellcheck.logLevel": "trace",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "workbench.colorTheme": "Syntax Material Dark"
 }
