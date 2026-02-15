@@ -1,12 +1,16 @@
 #!/bin/bash
 
 function goto() {
-    dirmap=(
-        ["desktop"]="$HOME/Desktop"
-        ["code"]="${dirmap[desktop]}/Code"
-        ["node"]="${dirmap[code]}/Node"
-        ["js-scripts"]="${dirmap[node]}/js-scripts"
-        ["bash-scripts"]="${dirmap[node]}/bash-scripts"
+    local desktop="$HOME/Desktop"
+    local code="$desktop/Code"
+    local node="$code/Node"
+
+    declare -A dirmap=(
+        ["desktop"]="$desktop"
+        ["code"]="$code"
+        ["node"]="$node"
+        ["js-scripts"]="$node/js-scripts"
+        ["bash-scripts"]="$code/Other/bash-scripts"
     )
 
     function usage() {
@@ -23,7 +27,7 @@ function goto() {
     fi
 
     alias="$1"
-    target_dir="${dirmap[$alias]}"
+    target_dir=${dirmap["$alias"]}
 
     if [[ -z "$target_dir" ]]; then
         echo "Error: Unknown directory alias '$alias'."
@@ -41,7 +45,7 @@ function goto() {
         return 1
     }
 
-    echo "navigated to directory alias '$alias'."
+    echo "changed to directory '$alias' -> '$target_dir'."
     return 0
 }
 
