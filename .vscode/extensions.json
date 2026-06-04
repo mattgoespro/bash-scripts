@@ -2,12 +2,10 @@
   "recommendations": [
     "github.copilot-chat",
     "usernamehw.errorlens",
-    "jeff-hykin.better-shellscript-syntax",
     "timonwong.shellcheck",
     "richie5um2.vscode-sort-json",
     "esbenp.prettier-vscode",
     "felipecaputo.git-project-manager",
-    "woodywoodsta.vscode-material-syntax-dark",
     "mads-hartmann.bash-ide-vscode",
     "eamodio.gitlens",
     "peaceshi.syntax-highlight"

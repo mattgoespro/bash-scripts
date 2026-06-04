@@ -66,7 +66,7 @@ function edit-env() {
         return 1
     fi
 
-    code "$bash_scripts_dir" --goto .bashrc
+    code "$bash_scripts_dir" --goto "$bash_scripts_dir/.bashrc"
 }
 
 function reload() {
