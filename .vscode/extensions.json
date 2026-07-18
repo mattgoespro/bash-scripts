@@ -2,7 +2,6 @@
   "recommendations": [
     "github.copilot-chat",
     "usernamehw.errorlens",
-    "timonwong.shellcheck",
     "richie5um2.vscode-sort-json",
     "esbenp.prettier-vscode",
     "felipecaputo.git-project-manager",

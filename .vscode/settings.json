@@ -9,10 +9,12 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
+  "workbench.editor.useModal": "off",
   "editor.fontFamily": "Ubuntu Sans Mono",
+  "editor.fontSize": 11,
   "bashIde.backgroundAnalysisMaxFiles": 50000,
   "bashIde.globPattern": "**/*.sh",
-  "bashIde.shellcheckPath": "",
+  "bashIde.shellcheckArguments": "--rcfile .shellcheckrc",
   "editor.codeActionsOnSave": {
     "source.fixAll.shellcheck": "always"
   },
@@ -20,8 +22,6 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "shellcheck.customArgs": ["--external-sources", "scripts"],
-  "shellcheck.logLevel": "trace",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "workbench.colorTheme": "Dark+"
+  "workbench.colorTheme": "Syntax Material Dark"
 }

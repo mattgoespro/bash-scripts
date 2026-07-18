@@ -23,14 +23,12 @@ export PROGRAMFILES
 #####################################################################
 GIT="$PROGRAMFILES/Git"
 SUBLIME_TEXT="$PROGRAMFILES/Sublime Text"
-VOLTA="$PROGRAMFILES/Volta"
 
 USER_PATH="$GIT/bin:\
 $GIT/cmd:\
 $GIT/mingw64/bin:\
 $GIT/usr/bin:\
-$SUBLIME_TEXT:\
-$VOLTA"
+$SUBLIME_TEXT"
 
 #####################################################################
 #                                                                   #
@@ -59,13 +57,17 @@ VOLTA_LOCAL="$LOCALAPPDATA/Volta"
 PYTHON_LOCAL="$LOCALAPPDATA/Programs/Python/Python312"
 ANDROID_SDK_STANDALONE="$LOCALAPPDATA/Programs/Android SDK"
 
+# Volta is a System Application but it needs to be added *after* the local applications to ensure that the correct version of Node is used.
+VOLTA="$PROGRAMFILES/Volta"
+
 USER_PATH="$USER_PATH:\
 $ANDROID_SDK_STANDALONE/cmdline-tools/bin:\
 $ANDROID_SDK_STANDALONE/platform-tools:\
 $PYTHON_LOCAL:\
 $PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
-$VOLTA_LOCAL/bin"
+$VOLTA_LOCAL/bin:\
+$VOLTA"
 
 #####################################################################
 #                                                                   #
