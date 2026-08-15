@@ -11,3 +11,5 @@ fi
 if command -v avdmanager.bat >/dev/null 2>&1; then
     alias avdmanager="\$(command -v avdmanager.bat)"
 fi
+
+alias cursor-cli="cursor agent"
