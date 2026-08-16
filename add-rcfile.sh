@@ -42,8 +42,13 @@ function source-repo-bash-aliases() {
     local repo_aliases_file_path="$2"
 
     log "$(color-text "sourcing repo bash_aliases in global bashrc..." green)"
-    echo "source \"$repo_aliases_file_path\"" >>"$global_aliases_file_path"
 
+    cat <<EOL >>"$global_aliases_file_path"
+        # Source the repo bash_aliases file
+        if [ -f "$repo_aliases_file_path" ]; then
+            source "$repo_aliases_file_path"
+        fi
+EOL
 }
 
 function source-utility-functions() {

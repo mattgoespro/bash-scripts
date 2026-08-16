@@ -6,7 +6,6 @@
     "esbenp.prettier-vscode",
     "felipecaputo.git-project-manager",
     "mads-hartmann.bash-ide-vscode",
-    "eamodio.gitlens",
     "peaceshi.syntax-highlight"
   ]
 }
