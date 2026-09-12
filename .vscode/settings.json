@@ -19,6 +19,7 @@
   "editor.fontSize": 11,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "workbench.activityBar.orientation": "vertical",
   "editor.semanticHighlighting.enabled": true,
   "files.eol": "\n",
   "gitProjectManager.baseProjectsFolders": [
@@ -27,6 +28,5 @@
   "gitProjectManager.maxDepthRecursion": 2,
   "gitProjectManager.openInNewWindow": true,
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "workbench.colorTheme": "Syntax Material Dark",
-  "workbench.editor.useModal": "off"
+  "workbench.colorTheme": "Default Dark Modern"
 }

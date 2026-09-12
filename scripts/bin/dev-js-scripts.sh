@@ -7,4 +7,4 @@ if [[ ! -d "$js_scripts_dir" ]]; then
     exit 1 >>/dev/null
 fi
 
-code "$js_scripts_dir"
+cursor "$js_scripts_dir"

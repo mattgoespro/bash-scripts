@@ -34,6 +34,7 @@ function extract_first_chars() {
             echo "$input"
             return
         fi
+
         result+="${part:0:1}"
     done
 
@@ -45,6 +46,7 @@ function generated-alias-exists() {
     local alias_definition="$2"
 
     grep "$alias_definition" "$generated_aliases_rcfile"
+
     if grep -q "$alias_definition" "$generated_aliases_rcfile"; then
         return 0
     fi
@@ -101,7 +103,7 @@ function add-js-scripts-executable-aliases() {
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
-        log "$(color-text "[error] js-scripts executables in directory '$js_scripts_executables_dir' haven't been compiled, skipping." red) "
+        log "$(color-text "[error] js-scripts executables in directory '$js_scripts_executables_dir' haven't been compiled, skipping." yellow) "
         return 1
     fi
 

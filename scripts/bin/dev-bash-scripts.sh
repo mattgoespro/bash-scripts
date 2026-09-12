@@ -7,4 +7,4 @@ if [[ ! -d "$bash_scripts_dir" ]]; then
     exit 1 >>/dev/null
 fi
 
-code "$bash_scripts_dir"
+cursor "$bash_scripts_dir"

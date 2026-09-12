@@ -8,6 +8,9 @@ source "$HOME/Desktop/Code/Other/bash-scripts/.bash_aliases"
 
 source "$HOME/Desktop/Code/Other/bash-scripts/.user_aliases"
 
+source "$HOME/Desktop/Code/Other/bash-scripts/.completions"
+
+
 #####################################################################
 #                                                                   #
 #                       SYSTEM DIRECTORIES                          #
@@ -107,9 +110,11 @@ if [[ -d "$ANDROID_SDK_HOME" ]]; then
     ANDROID_SDK_EMULATOR="$ANDROID_SDK_HOME/emulator"
 
     USER_PATH="$USER_PATH:\
-    $ANDROID_SDK_CLI_TOOLS:\
-    $ANDROID_SDK_PLATFORM_TOOLS:\
-    $ANDROID_SDK_EMULATOR"
+$ANDROID_SDK_CLI_TOOLS:\
+$ANDROID_SDK_PLATFORM_TOOLS:\
+$ANDROID_SDK_EMULATOR"
+else
+    echo "Skipping environment configuration for Android SDK because it is not installed."
 fi
 
 #####################################################################
@@ -126,8 +131,8 @@ fi
 #     export JAVA_HOME
 
 #     USER_PATH="$USER_PATH:\
-#         $JAVA_HOME/bin:\
-#         $LOCALAPPDATA/flutter/bin"
+# $JAVA_HOME/bin:\
+# $LOCALAPPDATA/flutter/bin"
 # fi
 
 #####################################################################

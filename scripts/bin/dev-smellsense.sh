@@ -7,4 +7,4 @@ if [[ ! -d "$smellsense_dir" ]]; then
     exit 1 >>/dev/null
 fi
 
-code "$smellsense_dir"
+cursor "$smellsense_dir"
