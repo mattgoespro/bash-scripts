@@ -100,3 +100,16 @@ elif type compctl &>/dev/null; then
   }
   compctl -K _npm_completion npm
 fi
+
+
+# scoop search
+# Source: https://github.com/shilangyu/scoop-search#bash-wrapper
+SCOOP_EXEC=$(which scoop)
+
+scoop() {
+    if [[ "$1" == "search" ]]; then
+        scoop-search ${@:2}
+    else
+        $SCOOP_EXEC $@
+    fi
+}
