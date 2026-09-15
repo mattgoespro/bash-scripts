@@ -71,7 +71,7 @@ $PYTHON_LOCAL/Scripts:\
 $VOLTA_LOCAL:\
 $VOLTA_LOCAL/bin:\
 $VOLTA:\
-$LOCALAPPDATA\cursor-agent"
+$LOCALAPPDATA/cursor-agent"
 
 #####################################################################
 #                                                                   #
