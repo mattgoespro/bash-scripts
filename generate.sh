@@ -7,7 +7,7 @@ js_scripts_executables_dir="$(cygpath "$HOME")/Desktop/Code/CLI/js-scripts/dist"
 # shellcheck disable=SC1091
 source "$cwd/scripts/functions.sh"
 
-if ! "$cwd/add-utilities.sh"; then
+if ! "$cwd/add-utilities.sh" "$js_scripts_executables_dir"; then
     echo -e "\n$(color-text "error: failed to generate bash_aliases." red)"
     exit 1
 fi

@@ -1,17 +1,18 @@
 #!/bin/bash
 
 function goto() {
+    local desktop="$HOME/Desktop"
     local code="$desktop/Code"
-    local code-cli="$code/CLI"
-    local code-desktop="$code/Desktop"
-    local code-browser="$code/Browser"
-    local code-mobile="$code/Mobile"
+    local code_cli="$code/CLI"
+    local code_desktop="$code/Desktop"
+    local code_browser="$code/Browser"
+    local code_mobile="$code/Mobile"
 
     declare -A dirmap=(
-        ["code-cli"]="$code-cli"
-        ["code-desktop"]="$code-desktop"
-        ["code-browser"]="$code-browser"
-        ["code-mobile"]="$code-mobile"
+        ["code-cli"]="$code_cli"
+        ["code-desktop"]="$code_desktop"
+        ["code-browser"]="$code_browser"
+        ["code-mobile"]="$code_mobile"
     )
 
     function usage() {
