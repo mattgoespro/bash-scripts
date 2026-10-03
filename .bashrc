@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# shellcheck source=/dev/null
-source "$HOME/Desktop/Code/Other/bash-scripts/scripts/functions.sh"
+cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
-source "$HOME/Desktop/Code/Other/bash-scripts/.bash_aliases"
+source "$cwd/scripts/functions.sh"
 
-source "$HOME/Desktop/Code/Other/bash-scripts/.user_aliases"
+# shellcheck source=/dev/null
+source "$cwd/.bash_aliases"
 
-source "$HOME/Desktop/Code/Other/bash-scripts/.completions"
+source "$cwd/.user_aliases"
+
+source "$cwd/.completions"
 
 
 #####################################################################

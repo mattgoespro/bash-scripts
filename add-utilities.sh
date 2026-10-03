@@ -99,7 +99,7 @@ function add-script-aliases() {
 function add-js-scripts-executable-aliases() {
     local generated_aliases_rcfile="$1"
     local js_scripts_executables_dir
-    js_scripts_executables_dir="$(cygpath "$HOME")/Desktop/Code/Node/js-scripts/dist"
+    js_scripts_executables_dir="$2"
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
@@ -131,6 +131,9 @@ function add-bash-completions() {
 }
 
 function generate-repo-bash-aliases-rcfile() {
+    local js_scripts_executables_dir
+    js_scripts_executables_dir="$1"
+
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
     if [[ -f "$repo_bash_aliases_file" ]]; then
@@ -152,7 +155,7 @@ function generate-repo-bash-aliases-rcfile() {
     log "\n$(color-text "successfully added script aliases!" green)"
     log ""
 
-    add-js-scripts-executable-aliases "$repo_bash_aliases_file"
+    add-js-scripts-executable-aliases "$repo_bash_aliases_file" "$js_scripts_executables_dir"
     log "\n$(color-text "successfully added js-scripts executable aliases!" green)"
     log ""
 
@@ -161,7 +164,7 @@ function generate-repo-bash-aliases-rcfile() {
     log ""
 }
 
-generate-repo-bash-aliases-rcfile || {
+generate-repo-bash-aliases-rcfile "$1" || {
     log "$(color-text "error: failed to generate repo bash aliases rcfile" red)"
     exit 1
 }

@@ -44,20 +44,11 @@ function source-repo-bash-aliases() {
     log "$(color-text "sourcing repo bash_aliases in global bashrc..." green)"
 
     cat <<EOL >>"$global_aliases_file_path"
-        # Source the repo bash_aliases file
-        if [ -f "$repo_aliases_file_path" ]; then
-            source "$repo_aliases_file_path"
-        fi
+# Source the repo bash_aliases file
+if [ -f "$repo_aliases_file_path" ]; then
+    source "$repo_aliases_file_path"
+fi
 EOL
-}
-
-function source-utility-functions() {
-    local global_bashrc_file_path="$1"
-    local repo_functions="$cwd/scripts/functions.sh"
-
-    log "$(color-text "sourcing utility functions in global bashrc..." green)"
-    echo "source \"$repo_functions\"" >>"$global_bashrc_file_path"
-
 }
 
 function add-user-aliases() {
@@ -75,5 +66,4 @@ repo_bash_aliases_file="$cwd/.bash_aliases"
 
 create-global-bashrc-file "$global_bashrc_file" "$repo_bashrc_file"
 source-repo-bash-aliases "$global_bashrc_file" "$repo_bash_aliases_file"
-source-utility-functions "$global_bashrc_file"
 add-user-aliases "$repo_bash_aliases_file"

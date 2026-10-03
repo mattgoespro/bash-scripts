@@ -1,16 +1,17 @@
 #!/bin/bash
 
 function goto() {
-    local desktop="$HOME/Desktop"
     local code="$desktop/Code"
-    local node="$code/Node"
+    local code-cli="$code/CLI"
+    local code-desktop="$code/Desktop"
+    local code-browser="$code/Browser"
+    local code-mobile="$code/Mobile"
 
     declare -A dirmap=(
-        ["desktop"]="$desktop"
-        ["code"]="$code"
-        ["node"]="$node"
-        ["js-scripts"]="$node/js-scripts"
-        ["bash-scripts"]="$code/Other/bash-scripts"
+        ["code-cli"]="$code-cli"
+        ["code-desktop"]="$code-desktop"
+        ["code-browser"]="$code-browser"
+        ["code-mobile"]="$code-mobile"
     )
 
     function usage() {
@@ -59,14 +60,10 @@ function home() {
 }
 
 function edit-env() {
-    bash_scripts_dir="/c/Users/Matt/Desktop/Code/Other/bash-scripts"
+    local cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local bash_scripts_dir="$cwd/.."
 
-    if [[ ! -d "$bash_scripts_dir" ]]; then
-        echo "[vscode-open-bash-scripts] error: bash scripts directory does not exist: $bash_scripts_dir"
-        return 1
-    fi
-
-    code "$bash_scripts_dir" --goto "$bash_scripts_dir/.bashrc"
+    subl "$bash_scripts_dir/.bashrc"
 }
 
 function reload() {

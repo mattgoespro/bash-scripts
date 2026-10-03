@@ -19,8 +19,52 @@
   "editor.fontSize": 11,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "workbench.activityBar.orientation": "vertical",
   "editor.semanticHighlighting.enabled": true,
+  "editor.tokenColorCustomizations": {
+    "[Cursor Dark]": {
+      "textMateRules": [
+        {
+          "scope": [
+            "source.shell comment",
+            "punctuation.definition.comment.shell",
+            "punctuation.definition.comment.shebang.shell"
+          ],
+          "settings": {
+            "foreground": "#1ce1ff"
+          }
+        },
+        {
+          "scope": [
+            "variable.other.assignment.shell",
+            "variable.other.normal.shell",
+            "variable.parameter.positional.shell",
+            "variable.parameter.positional.all.shell",
+            "punctuation.definition.variable.shell"
+          ],
+          "settings": {
+            "foreground": "#f09bff"
+          }
+        },
+        {
+          "scope": [
+            "string",
+            "string.quoted.double.shell",
+            "string.quoted.single.shell",
+            "string.quoted.backtick.shell",
+            "string.quoted.single.shell",
+            "string.quoted.double.shell",
+            "string.quoted.single.shell",
+            "string.quoted.backtick.shell",
+            "string.quoted.single.shell",
+            "string.quoted.double.shell"
+          ],
+          "settings": {
+            "foreground": "#fff268"
+          }
+        }
+      ]
+    }
+  },
   "files.eol": "\n",
   "gitProjectManager.baseProjectsFolders": [
     "%USERPROFILE%\\Desktop\\Code"
@@ -28,5 +72,6 @@
   "gitProjectManager.maxDepthRecursion": 2,
   "gitProjectManager.openInNewWindow": true,
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "workbench.colorTheme": "Default Dark Modern"
+  "workbench.activityBar.orientation": "vertical",
+  "workbench.colorTheme": "Cursor Dark"
 }

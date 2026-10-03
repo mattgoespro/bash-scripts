@@ -2,6 +2,8 @@
 
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+js_scripts_executables_dir="$(cygpath "$HOME")/Desktop/Code/CLI/js-scripts/dist"
+
 # shellcheck disable=SC1091
 source "$cwd/scripts/functions.sh"
 

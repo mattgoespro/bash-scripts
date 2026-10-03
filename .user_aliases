@@ -1,7 +1,6 @@
 # shellcheck disable=SC2148
 LOCALAPPDATA="$(cygpath "${LOCALAPPDATA:?}")"
 
-alias meditation-picker="\$HOME/Desktop/Code/Node/js-scripts/dist/meditation-picker.exe"
 alias env="env | sort"
 
 if command -v sdkmanager.bat >/dev/null 2>&1; then
