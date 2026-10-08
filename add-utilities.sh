@@ -98,8 +98,7 @@ function add-script-aliases() {
 
 function add-js-scripts-executable-aliases() {
     local generated_aliases_rcfile="$1"
-    local js_scripts_executables_dir
-    js_scripts_executables_dir="$2"
+    local js_scripts_executables_dir="$2"
     js_scripts_executables_ext=".exe"
 
     if [[ ! -d "$js_scripts_executables_dir" ]]; then
@@ -131,8 +130,7 @@ function add-bash-completions() {
 }
 
 function generate-repo-bash-aliases-rcfile() {
-    local js_scripts_executables_dir
-    js_scripts_executables_dir="$1"
+    local js_scripts_executables_dir="$1"
 
     local repo_bash_aliases_file="$cwd/.bash_aliases"
 
