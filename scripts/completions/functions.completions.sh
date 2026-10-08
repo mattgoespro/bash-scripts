@@ -6,7 +6,7 @@ _goto() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
 
-    opts="desktop code node js-scripts bash-scripts"
+    opts="code code-cli code-desktop code-browser code-mobile"
 
     if [[ ${COMP_CWORD} -eq 1 ]]; then
         mapfile -t COMPREPLY < <(compgen -W "${opts}" -- "${cur}")

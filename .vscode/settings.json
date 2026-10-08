@@ -30,7 +30,7 @@
             "punctuation.definition.comment.shebang.shell"
           ],
           "settings": {
-            "foreground": "#1ce1ff"
+            "foreground": "#828282"
           }
         },
         {
@@ -42,7 +42,7 @@
             "punctuation.definition.variable.shell"
           ],
           "settings": {
-            "foreground": "#f09bff"
+            "foreground": "#dec0ff"
           }
         },
         {
@@ -59,7 +59,7 @@
             "string.quoted.double.shell"
           ],
           "settings": {
-            "foreground": "#fff268"
+            "foreground": "#dad79e"
           }
         }
       ]
