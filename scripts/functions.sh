@@ -9,6 +9,7 @@ function goto() {
     local code_mobile="$code/Mobile"
 
     declare -A dirmap=(
+        ["code"]="$code"
         ["code-cli"]="$code_cli"
         ["code-desktop"]="$code_desktop"
         ["code-browser"]="$code_browser"
